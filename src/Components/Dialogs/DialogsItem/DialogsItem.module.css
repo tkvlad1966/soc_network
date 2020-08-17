@@ -1,0 +1,27 @@
+.dialogsItems {
+    padding: 10px;
+}
+
+.dialog .activeLink {
+    color: white;
+}
+
+.dialog a {
+    text-decoration: none;
+    color: black;
+    vertical-align: top;
+}
+
+.dialog img {
+    border: 1px solid goldenrod;
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    background-color: grey;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.activeLink {
+    color: black;
+}

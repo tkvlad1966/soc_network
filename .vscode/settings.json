@@ -1,0 +1,9 @@
+{
+    "javascript.validate.enable": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "prettier-eslint.eslintIntegration": true,
+    "editor.formatOnSave": true,
+    "git.ignoreLimitWarning": true
+  }
+  
