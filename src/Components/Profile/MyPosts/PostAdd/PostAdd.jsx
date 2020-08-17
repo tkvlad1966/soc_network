@@ -4,7 +4,6 @@ import s from './PostAdd.module.css';
 const PostAdd = (props) => {
   let onAddPost = () => {
     props.addPost();
-    console.log('test');
   };
 
   let onPostChange = (event) => {
