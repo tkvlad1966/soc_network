@@ -78,13 +78,4 @@ let mapStateToProps = (state) => {
   };
 };
 
-const UsersContainer = connect(mapStateToProps, {
-  follow,
-  unfollow,
-  setUsers,
-  setCurrentPage,
-  setTotalCountUsers,
-  toogleIsFetching,
-})(UsersAPIContainer);
-
 export default UsersContainer;
