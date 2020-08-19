@@ -2,9 +2,6 @@ const TOOGLE_IS_FETCHING = 'TOOGLE_IS_FETCHING';
 
 export const toogleIsFetching = (isFetching) => ({ type: TOOGLE_IS_FETCHING, isFetching });
 
-let initialState = {
-    isFetching: false
-};
 
 const appReducer = (state = initialState, action) => {
     switch (action.type) {
