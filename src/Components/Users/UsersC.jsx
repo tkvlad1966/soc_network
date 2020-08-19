@@ -41,18 +41,6 @@ import { Images } from '../../images';
 const Users = (props) => {
   return (
     <div>
-      <div>
-        {props.pages.map((num) => (
-          <span
-            className={num === props.currentPage ? s.selected : ''}
-            onClick={() => {
-              props.onPageChange(num);
-            }}
-            key={num}>
-            {num}
-          </span>
-        ))}
-      </div>
       {props.users.map((user) => {
         return (
           <div className={s.users} key={user.id}>
@@ -91,6 +79,18 @@ const Users = (props) => {
           </div>
         );
       })}
+      <div>
+        {props.pages.map((num) => (
+          <span
+            className={num === props.currentPage ? s.selected : s.unselected}
+            onClick={() => {
+              props.onPageChange(num);
+            }}
+            key={num}>
+            {num}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };
