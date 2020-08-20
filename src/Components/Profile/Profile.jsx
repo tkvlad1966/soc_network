@@ -11,7 +11,7 @@ const Profile = (props) => {
         <img src="https://cdn.pixabay.com/photo/2017/01/30/16/11/sunset-2021266__480.jpg" />
       </div>
       <div className={s.ava}>
-        <ProfileInfo />
+        <ProfileInfo profile={props.profile} />
       </div>
       <MyPostsContainer />
     </div>
