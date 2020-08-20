@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './UsersC.module.css';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { Images } from '../../images';
 
 // class Users extends React.Component {
@@ -46,11 +46,15 @@ const Users = (props) => {
           <div className={s.users} key={user.id}>
             <div className={s.userFollowed}>
               <div>
-                <img
-                  src={
-                    user.photos.small != null ? user.photos.small : Images.logo
-                  }
-                />
+                <NavLink to={'/profile/' + user.id}>
+                  <img
+                    src={
+                      user.photos.small != null
+                        ? user.photos.small
+                        : Images.logo
+                    }
+                  />
+                </NavLink>
               </div>
               <div>
                 {user.followed ? (
