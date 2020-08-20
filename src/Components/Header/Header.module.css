@@ -1,9 +1,11 @@
 .header {
   grid-area: h;
   background-color: rgb(70, 138, 70);
-  display: grid;
-  grid-template-columns: 2fr 10fr;
-  text-align: center;
+}
+
+.login_block {
+  float: right;
+  margin-right: 3rem;
 }
 
 header img {
