@@ -7,8 +7,8 @@ const MyPosts = (props) => {
   const posts = props.posts;
   let postsElements = posts.map((p) => <Post post={p} key={p.id} />);
   return (
-    <div>
-      <h3>My posts</h3>
+    <div className={s.myPost}>
+      <h4>My posts</h4>
       <div>
         <PostAdd
           newPostText={props.newPostText}
@@ -16,7 +16,7 @@ const MyPosts = (props) => {
           addPost={props.addPost}
         />
       </div>
-      <div className={s.posts}>{postsElements}</div>
+      <div>{postsElements}</div>
     </div>
   );
 };
