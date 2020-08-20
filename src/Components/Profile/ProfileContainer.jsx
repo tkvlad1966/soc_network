@@ -9,6 +9,9 @@ import { withRouter } from 'react-router-dom';
 class ProfileContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.match.params.userId;
+    if (!userId) {
+      userId = 2;
+    }
     this.props.toogleIsFetching(true);
     getUserProfile(userId).then((response) => {
       this.props.toogleIsFetching(false);
