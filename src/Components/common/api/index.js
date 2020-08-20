@@ -7,3 +7,9 @@ export const getUsers = ({ page, count }) => {
             `${baseUrl}users?page=${page}&count=${count}`,
         )
 }
+export const getUserProfile = () => {
+    return axios
+        .get(
+            `${baseUrl}/profile/2`,
+        )
+}
