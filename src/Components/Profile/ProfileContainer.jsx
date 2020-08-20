@@ -4,11 +4,16 @@ import { getUserProfile } from '../common/api';
 import { connect } from 'react-redux';
 import { setUserProfile } from '../../redux/profile-reducer';
 import { toogleIsFetching } from '../../redux/app-reducer';
+import { withRouter } from 'react-router-dom';
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
+    let userId = this.props.match.params.userId;
+    if (!userId) {
+      userId = 2;
+    }
     this.props.toogleIsFetching(true);
-    getUserProfile().then((response) => {
+    getUserProfile(userId).then((response) => {
       this.props.toogleIsFetching(false);
       this.props.setUserProfile(response.data);
     });
@@ -28,5 +33,5 @@ let mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { setUserProfile, toogleIsFetching })(
-  ProfileContainer,
+  withRouter(ProfileContainer),
 );
