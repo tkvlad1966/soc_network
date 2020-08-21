@@ -13,3 +13,10 @@ export const getUserProfile = (userId) => {
             `${baseUrl}/profile/${userId}`,
         )
 }
+export const getAuthorization = () => {
+    return axios
+        .get(
+            `${baseUrl}/auth/me`,
+            { withCredentials: true }
+        )
+}
