@@ -17,6 +17,6 @@ export const getAuthorization = () => {
     return axios
         .get(
             `${baseUrl}/auth/me`,
-            { withCredentials: true }
+            { withCredentials: true, sameSite: 'none', secure: true }
         )
 }
