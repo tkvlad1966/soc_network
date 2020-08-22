@@ -1,8 +1,9 @@
 import React from 'react';
 import Header from './Header';
-import { getAuthorization } from '../common/api';
+import { getAuthorization, getUserProfile } from '../common/api';
 import { connect } from 'react-redux';
 import { setAuthUserData } from '../../redux/auth-reducer';
+import { setUserProfile } from '../../redux/profile-reducer';
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
@@ -12,14 +13,24 @@ class HeaderContainer extends React.Component {
         this.props.setAuthUserData(id, login, email);
       }
     });
+    let userId = this.props.userId;
+    getUserProfile(userId).then((response) => {
+      this.props.setUserProfile(response.data);
+    });
   }
   render() {
     return <Header {...this.props} />;
   }
 }
 
-const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth,
-  login: state.auth.login,
-});
-export default connect(mapStateToProps, { setAuthUserData })(HeaderContainer);
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.isAuth,
+    login: state.auth.login,
+    userId: state.auth.userId,
+    profile: state.profile.profile,
+  };
+};
+export default connect(mapStateToProps, { setAuthUserData, setUserProfile })(
+  HeaderContainer,
+);
