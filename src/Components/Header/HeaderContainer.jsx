@@ -2,8 +2,8 @@ import React from 'react';
 import Header from './Header';
 import { getAuthorization, getUserProfile } from '../common/api';
 import { connect } from 'react-redux';
-import { setAuthUserData } from '../../redux/auth-reducer';
-import { setUserProfile } from '../../redux/profile-reducer';
+import { setAuthUserData, setUserPhotos } from '../../redux/auth-reducer';
+import { toogleIsFetching } from '../../redux/app-reducer';
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
@@ -14,8 +14,10 @@ class HeaderContainer extends React.Component {
       }
     });
     let userId = this.props.userId;
+    this.props.toogleIsFetching(true);
     getUserProfile(userId).then((response) => {
-      this.props.setUserProfile(response.data);
+      this.props.toogleIsFetching(false);
+      this.props.setUserPhotos(response.data.photos.small);
     });
   }
   render() {
@@ -28,9 +30,12 @@ const mapStateToProps = (state) => {
     isAuth: state.auth.isAuth,
     login: state.auth.login,
     userId: state.auth.userId,
-    profile: state.profile.profile,
+    photos: state.auth.photos,
+    isFetching: state.app.isFetching,
   };
 };
-export default connect(mapStateToProps, { setAuthUserData, setUserProfile })(
-  HeaderContainer,
-);
+export default connect(mapStateToProps, {
+  setAuthUserData,
+  setUserPhotos,
+  toogleIsFetching,
+})(HeaderContainer);
