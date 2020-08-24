@@ -1,45 +1,33 @@
-import { baseUrl } from "../../../utils/constants"
 import * as axios from 'axios';
 
-export const getUsers = ({ page, count }) => {
-    return axios
-        .get(
-            `${baseUrl}users?page=${page}&count=${count}`,
-            { withCredentials: true }
-        )
+const instanse = axios.create({
+    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+    withCredentials: true,
+    headers: {
+        'API-KEY': '49fcc7a6-93ef-4ac6-9181-4b2c76f5a553'
+    }
+})
+
+export const getUsers = ({ page = 1, count = 10 }) => {
+    return instanse.get(`users?page=${page}&count=${count}`)
+        .then(response => response.data)
 }
 export const getUserProfile = (userId) => {
-    return axios
-        .get(
-            `${baseUrl}profile/${userId}`,
-        )
+    return instanse.get(`profile/${userId}`)
+        .then(response => response.data)
 }
 export const getAuthorization = () => {
-    return axios
-        .get(
-            `${baseUrl}/auth/me`,
-            { withCredentials: true, sameSite: 'none', secure: true }
-        )
+    return instanse.get(`/auth/me`,
+        { sameSite: 'none', secure: true }
+    )
 }
 export const postFollow = (userId) => {
-    return axios
-        .post(
-            `${baseUrl}follow/${userId}`, {}, {
-            withCredentials: true,
-            headers: {
-                'API-KEY': '49fcc7a6-93ef-4ac6-9181-4b2c76f5a553'
-            }
-        }
-        )
+    return instanse.post(
+        `follow/${userId}`, {}
+    )
 }
 export const delFollow = (userId) => {
-    return axios
-        .delete(
-            `${baseUrl}follow/${userId}`, {
-            withCredentials: true,
-            headers: {
-                'API-KEY': '49fcc7a6-93ef-4ac6-9181-4b2c76f5a553'
-            }
-        }
-        )
+    return instanse.delete(
+        `follow/${userId}`
+    )
 }

@@ -13,9 +13,9 @@ class ProfileContainer extends React.Component {
       userId = 2;
     }
     this.props.toogleIsFetching(true);
-    getUserProfile(userId).then((response) => {
+    getUserProfile(userId).then((data) => {
       this.props.toogleIsFetching(false);
-      this.props.setUserProfile(response.data);
+      this.props.setUserProfile(data);
     });
   }
   render() {
