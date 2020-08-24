@@ -17,10 +17,10 @@ class UsersAPIContainer extends React.Component {
   componentDidMount() {
     this.props.toogleIsFetching(true);
     getUsers({ page: this.props.currentPage, count: this.props.sizePage }).then(
-      (response) => {
+      (data) => {
         this.props.toogleIsFetching(false);
-        this.props.setUsers(response.data.items);
-        this.props.setTotalCountUsers(response.data.totalCount);
+        this.props.setUsers(data.items);
+        this.props.setTotalCountUsers(data.totalCount);
       },
     );
   }
@@ -29,12 +29,10 @@ class UsersAPIContainer extends React.Component {
     this.props.setCurrentPage(pageNumber);
     this.props.toogleIsFetching(true);
 
-    getUsers({ page: pageNumber, count: this.props.sizePage }).then(
-      (response) => {
-        this.props.toogleIsFetching(false);
-        this.props.setUsers(response.data.items);
-      },
-    );
+    getUsers({ page: pageNumber, count: this.props.sizePage }).then((data) => {
+      this.props.toogleIsFetching(false);
+      this.props.setUsers(data.items);
+    });
   };
 
   render() {
@@ -61,7 +59,6 @@ class UsersAPIContainer extends React.Component {
           sizePage={this.props.sizePage}
           unfollow={this.props.unfollow}
           follow={this.props.follow}
-          // isFetching={this.props.isFetching}
         />
       </div>
     );

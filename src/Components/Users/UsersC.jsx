@@ -4,41 +4,6 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { Images } from '../../images';
 import { postFollow, delFollow } from '../common/api';
 
-// class Users extends React.Component {
-//   componentDidMount() {
-//     axios
-//       .get(
-//         `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.sizePage}`,
-//       )
-//       .then((response) => {
-//         this.props.setUsers(response.data.items);
-//         this.props.setTotalCountUsers(response.data.totalCount);
-//       });
-//   }
-
-//   onPageChange(pageNumber) {
-//     this.props.setCurrentPage(pageNumber);
-//     axios
-//       .get(
-//         `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.sizePage}`,
-//       )
-//       .then((response) => {
-//         this.props.setUsers(response.data.items);
-//       });
-//   }
-
-//   render() {
-//     let countPage = Math.ceil(this.props.totalCountUsers / this.props.sizePage);
-//     let pages = [];
-//     for (
-//       let i = this.props.currentPage - 5;
-//       i <= this.props.currentPage + 5;
-//       i++
-//     ) {
-//       if (i > 0) {
-//         pages.push(i);
-//       }
-//     }
 const Users = (props) => {
   return (
     <div>
