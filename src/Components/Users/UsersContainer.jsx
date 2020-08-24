@@ -59,7 +59,6 @@ class UsersAPIContainer extends React.Component {
           sizePage={this.props.sizePage}
           unfollow={this.props.unfollow}
           follow={this.props.follow}
-          // isFetching={this.props.isFetching}
         />
       </div>
     );
