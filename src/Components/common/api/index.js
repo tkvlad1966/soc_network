@@ -10,6 +10,13 @@ export const getUsers = ({ page, count }) => {
 export const getUserProfile = (userId) => {
     return axios
         .get(
-            `${baseUrl}/profile/${userId}`,
+            `${baseUrl}profile/${userId}`,
+        )
+}
+export const getAuthorization = () => {
+    return axios
+        .get(
+            `${baseUrl}/auth/me`,
+            { withCredentials: true, sameSite: 'none', secure: true }
         )
 }

@@ -1,11 +1,9 @@
-import { Images } from "../images";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_COUNT_USERS = 'SET_TOTAL_COUNT_USERS';
-// const TOOGLE_IS_FETCHING = 'TOOGLE_IS_FETCHING';
 
 export const follow = (usersid) => ({ type: FOLLOW, usersid });
 export const unfollow = (usersid) => ({ type: UNFOLLOW, usersid });
@@ -19,7 +17,6 @@ let initialState = {
     totalCountUsers: 0,
     currentPage: 1,
     sizePage: 6,
-    // isFetching: false
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -71,13 +68,6 @@ const usersReducer = (state = initialState, action) => {
                 totalCountUsers: action.totalCountUsers
             }
         }
-        // case TOOGLE_IS_FETCHING: {
-
-        //     return {
-        //         ...state,
-        //         isFetching: action.isFetching
-        //     }
-        // }
         default: return state;
     }
 

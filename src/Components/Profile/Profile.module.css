@@ -1,9 +1,12 @@
 .zastava {
-  text-align: center;
+  padding: 1%;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 .zastava img {
-  width: 1280px;
+
+  width: 1080px;
   height: 280px;
 }
 
