@@ -32,7 +32,7 @@ const profileReducer = (state = initialState, action) => {
             let stateCopy = { ...state };
             stateCopy.posts = [...state.posts];
             stateCopy.posts.push(post);
-
+            stateCopy.newPostText = '';
             return stateCopy;
         }
         case UPDATE_NEW_POST_TEXT: {
