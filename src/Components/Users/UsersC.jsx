@@ -2,7 +2,6 @@ import React from 'react';
 import s from './UsersC.module.css';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Images } from '../../images';
-import { postFollow, delFollow } from '../common/api';
 
 const Users = (props) => {
   return (
@@ -26,22 +25,14 @@ const Users = (props) => {
                 {user.followed ? (
                   <button
                     onClick={() => {
-                      delFollow(user.id).then((response) => {
-                        if (response.data.resultCode === 0) {
-                          props.unfollow(user.id);
-                        }
-                      });
+                      props.onClickOnUnFollow(user.id);
                     }}>
                     UnFollow{' '}
                   </button>
                 ) : (
                   <button
                     onClick={() => {
-                      postFollow(user.id).then((response) => {
-                        if (response.data.resultCode === 0) {
-                          props.follow(user.id);
-                        }
-                      });
+                      props.onClickFollow(user.id);
                     }}>
                     Follow{' '}
                   </button>
