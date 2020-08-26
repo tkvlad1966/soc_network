@@ -1,6 +1,6 @@
 import React from 'react';
 import Profile from './Profile';
-import { getUserProfile } from '../common/api';
+import { API } from '../common/api';
 import { connect } from 'react-redux';
 import { setUserProfile } from '../../redux/profile-reducer';
 import { toogleIsFetching } from '../../redux/app-reducer';
@@ -13,7 +13,7 @@ class ProfileContainer extends React.Component {
       userId = 2;
     }
     this.props.toogleIsFetching(true);
-    getUserProfile(userId).then((data) => {
+    API.getUserProfile(userId).then((data) => {
       this.props.toogleIsFetching(false);
       this.props.setUserProfile(data);
     });

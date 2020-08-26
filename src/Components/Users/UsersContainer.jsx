@@ -8,7 +8,7 @@ import {
   setCurrentPage,
   setTotalCountUsers,
 } from '../../redux/users-reducer';
-import { getUsers, postFollow, delFollow } from '../common/api';
+import { API } from '../common/api';
 import { Images } from '../../images';
 import {
   toogleIsFetching,
@@ -19,30 +19,33 @@ import {
 class UsersAPIContainer extends React.Component {
   componentDidMount() {
     this.props.toogleIsFetching(true);
-    getUsers({ page: this.props.currentPage, count: this.props.sizePage }).then(
-      (data) => {
-        this.props.toogleIsFetching(false);
-        this.props.setUsers(data.items);
-        this.props.setTotalCountUsers(data.totalCount);
-      },
-    );
+    API.getUsers({
+      page: this.props.currentPage,
+      count: this.props.sizePage,
+    }).then((data) => {
+      this.props.toogleIsFetching(false);
+      this.props.setUsers(data.items);
+      this.props.setTotalCountUsers(data.totalCount);
+    });
   }
 
   onPageChange = (pageNumber) => {
     this.props.setCurrentPage(pageNumber);
     this.props.toogleIsFetching(true);
 
-    getUsers({ page: pageNumber, count: this.props.sizePage }).then((data) => {
-      this.props.toogleIsFetching(false);
-      this.props.setUsers(data.items);
-    });
+    API.getUsers({ page: pageNumber, count: this.props.sizePage }).then(
+      (data) => {
+        this.props.toogleIsFetching(false);
+        this.props.setUsers(data.items);
+      },
+    );
   };
 
   onClickFollow = async (userId) => {
     const { toogleFollowingProgress, toogleUnFollowingProgress } = this.props;
     toogleFollowingProgress(userId);
     try {
-      const response = await postFollow(userId);
+      const response = await API.postFollow(userId);
       if (response.data.resultCode === 0) {
         this.props.follow(userId);
       }
@@ -57,7 +60,7 @@ class UsersAPIContainer extends React.Component {
     const { toogleFollowingProgress, toogleUnFollowingProgress } = this.props;
 
     toogleFollowingProgress(userId);
-    delFollow(userId)
+    API.delFollow(userId)
       .then((response) => {
         if (response.data.resultCode === 0) {
           this.props.unfollow(userId);

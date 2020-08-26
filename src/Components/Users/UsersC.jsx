@@ -4,7 +4,6 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { Images } from '../../images';
 
 const Users = (props) => {
-  console.log('Users props', props);
   return (
     <div>
       {props.users.map((user) => {
