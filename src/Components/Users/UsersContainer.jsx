@@ -13,6 +13,7 @@ import { Images } from '../../images';
 import {
   toogleIsFetching,
   toogleFollowingProgress,
+  toogleUnFollowingProgress,
 } from '../../redux/app-reducer';
 
 class UsersAPIContainer extends React.Component {
@@ -37,21 +38,37 @@ class UsersAPIContainer extends React.Component {
     });
   };
 
-  onClickFollow = (userId) => {
-    postFollow(userId).then((response) => {
+  onClickFollow = async (userId) => {
+    const { toogleFollowingProgress, toogleUnFollowingProgress } = this.props;
+    toogleFollowingProgress(userId);
+    try {
+      const response = await postFollow(userId);
       if (response.data.resultCode === 0) {
         this.props.follow(userId);
       }
-    });
-    debugger;
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      toogleUnFollowingProgress(userId);
+    }
   };
 
   onClickOnUnFollow = (userId) => {
-    delFollow(userId).then((response) => {
-      if (response.data.resultCode === 0) {
-        this.props.unfollow(userId);
-      }
-    });
+    const { toogleFollowingProgress, toogleUnFollowingProgress } = this.props;
+
+    toogleFollowingProgress(userId);
+    delFollow(userId)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          this.props.unfollow(userId);
+        }
+      })
+      .catch((error) => {
+        console.log('unfollow error', error);
+      })
+      .finally(() => {
+        toogleUnFollowingProgress(userId);
+      });
   };
 
   render() {
@@ -76,6 +93,7 @@ class UsersAPIContainer extends React.Component {
           onPageChange={this.onPageChange}
           users={this.props.users}
           sizePage={this.props.sizePage}
+          folloWingInProgress={this.props.folloWingInProgress}
           // unfollow={this.props.unfollow}
           // follow={this.props.follow}
           onClickFollow={this.onClickFollow}
@@ -105,6 +123,7 @@ const UsersContainer = connect(mapStateToProps, {
   setTotalCountUsers,
   toogleIsFetching,
   toogleFollowingProgress,
+  toogleUnFollowingProgress,
 })(UsersAPIContainer);
 
 export default UsersContainer;

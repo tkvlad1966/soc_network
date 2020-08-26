@@ -4,6 +4,7 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { Images } from '../../images';
 
 const Users = (props) => {
+  console.log('Users props', props);
   return (
     <div>
       {props.users.map((user) => {
@@ -24,6 +25,9 @@ const Users = (props) => {
               <div>
                 {user.followed ? (
                   <button
+                    disabled={props.folloWingInProgress.some(
+                      (f) => f === user.id,
+                    )}
                     onClick={() => {
                       props.onClickOnUnFollow(user.id);
                     }}>
@@ -31,6 +35,9 @@ const Users = (props) => {
                   </button>
                 ) : (
                   <button
+                    disabled={props.folloWingInProgress.some(
+                      (id) => id === user.id,
+                    )}
                     onClick={() => {
                       props.onClickFollow(user.id);
                     }}>
