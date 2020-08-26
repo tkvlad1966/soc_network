@@ -1,3 +1,6 @@
+import { toogleIsFetching } from "./app-reducer";
+import { API } from '../Components/common/api';
+
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -70,7 +73,20 @@ const usersReducer = (state = initialState, action) => {
         }
         default: return state;
     }
+}
 
+export const getUsersThunkCreator = (currentPage, sizePage) => {
+    return (dispatch) => {
+        dispatch(toogleIsFetching(true));
+        API.getUsers({
+            page: currentPage,
+            count: sizePage,
+        }).then((data) => {
+            dispatch(toogleIsFetching(false));
+            dispatch(setUsers(data.items));
+            dispatch(setTotalCountUsers(data.totalCount));
+        });
+    }
 }
 
 export default usersReducer;

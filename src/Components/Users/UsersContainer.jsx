@@ -7,38 +7,42 @@ import {
   setUsers,
   setCurrentPage,
   setTotalCountUsers,
+  getUsersThunkCreator,
 } from '../../redux/users-reducer';
-import { API } from '../common/api';
 import { Images } from '../../images';
 import {
   toogleIsFetching,
   toogleFollowingProgress,
   toogleUnFollowingProgress,
 } from '../../redux/app-reducer';
+import { API } from '../common/api';
 
 class UsersAPIContainer extends React.Component {
   componentDidMount() {
-    this.props.toogleIsFetching(true);
-    API.getUsers({
-      page: this.props.currentPage,
-      count: this.props.sizePage,
-    }).then((data) => {
-      this.props.toogleIsFetching(false);
-      this.props.setUsers(data.items);
-      this.props.setTotalCountUsers(data.totalCount);
-    });
+    this.props.getUsers(this.props.currentPage, this.props.sizePage);
+    // this.props.toogleIsFetching(true);
+    // API.getUsers({
+    //   page: this.props.currentPage,
+    //   count: this.props.sizePage,
+    // }).then((data) => {
+    //   this.props.toogleIsFetching(false);
+    //   this.props.setUsers(data.items);
+    //   this.props.setTotalCountUsers(data.totalCount);
+    // });
   }
 
   onPageChange = (pageNumber) => {
-    this.props.setCurrentPage(pageNumber);
-    this.props.toogleIsFetching(true);
+    this.props.getUsers(pageNumber, this.props.sizePage);
 
-    API.getUsers({ page: pageNumber, count: this.props.sizePage }).then(
-      (data) => {
-        this.props.toogleIsFetching(false);
-        this.props.setUsers(data.items);
-      },
-    );
+    this.props.setCurrentPage(pageNumber);
+    // this.props.toogleIsFetching(true);
+
+    // API.getUsers({ page: pageNumber, count: this.props.sizePage }).then(
+    //   (data) => {
+    //     this.props.toogleIsFetching(false);
+    //     this.props.setUsers(data.items);
+    //   },
+    // );
   };
 
   onClickFollow = async (userId) => {
@@ -127,6 +131,7 @@ const UsersContainer = connect(mapStateToProps, {
   toogleIsFetching,
   toogleFollowingProgress,
   toogleUnFollowingProgress,
+  getUsers: getUsersThunkCreator,
 })(UsersAPIContainer);
 
 export default UsersContainer;
