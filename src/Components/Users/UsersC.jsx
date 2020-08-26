@@ -2,9 +2,9 @@ import React from 'react';
 import s from './UsersC.module.css';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Images } from '../../images';
-import { postFollow, delFollow } from '../common/api';
 
 const Users = (props) => {
+  console.log('Users props', props);
   return (
     <div>
       {props.users.map((user) => {
@@ -25,23 +25,21 @@ const Users = (props) => {
               <div>
                 {user.followed ? (
                   <button
+                    disabled={props.folloWingInProgress.some(
+                      (f) => f === user.id,
+                    )}
                     onClick={() => {
-                      delFollow(user.id).then((response) => {
-                        if (response.data.resultCode === 0) {
-                          props.unfollow(user.id);
-                        }
-                      });
+                      props.onClickOnUnFollow(user.id);
                     }}>
                     UnFollow{' '}
                   </button>
                 ) : (
                   <button
+                    disabled={props.folloWingInProgress.some(
+                      (id) => id === user.id,
+                    )}
                     onClick={() => {
-                      postFollow(user.id).then((response) => {
-                        if (response.data.resultCode === 0) {
-                          props.follow(user.id);
-                        }
-                      });
+                      props.onClickFollow(user.id);
                     }}>
                     Follow{' '}
                   </button>
