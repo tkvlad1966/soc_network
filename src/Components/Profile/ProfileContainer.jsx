@@ -1,9 +1,7 @@
 import React from 'react';
 import Profile from './Profile';
-import { API } from '../common/api';
 import { connect } from 'react-redux';
-import { setUserProfile } from '../../redux/profile-reducer';
-import { toogleIsFetching } from '../../redux/app-reducer';
+import { getUserProfileThunkCreator } from '../../redux/profile-reducer';
 import { withRouter } from 'react-router-dom';
 
 class ProfileContainer extends React.Component {
@@ -12,11 +10,7 @@ class ProfileContainer extends React.Component {
     if (!userId) {
       userId = 2;
     }
-    this.props.toogleIsFetching(true);
-    API.getUserProfile(userId).then((data) => {
-      this.props.toogleIsFetching(false);
-      this.props.setUserProfile(data);
-    });
+    this.props.getUserProfile(userId);
   }
   render() {
     return (
@@ -32,6 +26,6 @@ let mapStateToProps = (state) => ({
   isFetching: state.app.isFetching,
 });
 
-export default connect(mapStateToProps, { setUserProfile, toogleIsFetching })(
-  withRouter(ProfileContainer),
-);
+export default connect(mapStateToProps, {
+  getUserProfile: getUserProfileThunkCreator,
+})(withRouter(ProfileContainer));

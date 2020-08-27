@@ -1,3 +1,7 @@
+import { API } from '../Components/common/api';
+import { toogleIsFetching } from './app-reducer';
+
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -46,6 +50,16 @@ const profileReducer = (state = initialState, action) => {
         default: return state;
     }
 
+}
+
+export const getUserProfileThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toogleIsFetching(true));
+        API.getUserProfile(userId).then((data) => {
+            dispatch(toogleIsFetching(false));
+            dispatch(setUserProfile(data));
+        });
+    }
 }
 
 export default profileReducer;
