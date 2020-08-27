@@ -2,19 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Users from './UsersC';
 import {
-  follow,
-  unfollow,
   setCurrentPage,
   setTotalCountUsers,
   getUsersThunkCreator,
   onClickUnFollowThunkCreator,
   onClickFollowThunkCreator,
 } from '../../redux/users-reducer';
-import { Images } from '../../images';
-import {
-  toogleFollowingProgress,
-  toogleUnFollowingProgress,
-} from '../../redux/app-reducer';
+
 import { API } from '../common/api';
 
 class UsersAPIContainer extends React.Component {
@@ -70,11 +64,9 @@ let mapStateToProps = (state) => {
 };
 
 const UsersContainer = connect(mapStateToProps, {
-  follow,
   setCurrentPage,
   setTotalCountUsers,
-  toogleFollowingProgress,
-  toogleUnFollowingProgress,
+
   getUsers: getUsersThunkCreator,
   onClickUnFollow: onClickUnFollowThunkCreator,
   onClickFollow: onClickFollowThunkCreator,
