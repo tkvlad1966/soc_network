@@ -1,3 +1,6 @@
+import { toogleIsFetching, toogleFollowingProgress, toogleUnFollowingProgress } from "./app-reducer";
+import { API } from '../Components/common/api';
+
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -10,7 +13,6 @@ export const unfollow = (usersid) => ({ type: UNFOLLOW, usersid });
 export const setUsers = (users) => ({ type: SET_USERS, users });
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage: currentPage });
 export const setTotalCountUsers = (totalCountUsers) => ({ type: SET_TOTAL_COUNT_USERS, totalCountUsers });
-// export const toogleIsFetchingAC = (isFetching) => ({ type: TOOGLE_IS_FETCHING, isFetching });
 
 let initialState = {
     users: [],
@@ -70,7 +72,56 @@ const usersReducer = (state = initialState, action) => {
         }
         default: return state;
     }
+}
 
+export const getUsersThunkCreator = (currentPage, sizePage) => {
+    return (dispatch) => {
+        dispatch(toogleIsFetching(true));
+        API.getUsers({
+            page: currentPage,
+            count: sizePage,
+        }).then((data) => {
+            dispatch(toogleIsFetching(false));
+            dispatch(setUsers(data.items));
+            dispatch(setTotalCountUsers(data.totalCount));
+        });
+    }
+}
+
+export const onClickFollowThunkCreator = (userId) => {
+    return async (dispatch) => {
+        dispatch(toogleFollowingProgress(userId));
+        try {
+            const response = await API.postFollow(userId);
+            if (response.data.resultCode === 0) {
+                dispatch(follow(userId));
+            }
+        }
+        catch (error) {
+            console.log('error', error);
+        }
+        finally {
+            dispatch(toogleUnFollowingProgress(userId));
+        }
+    };
+}
+
+export const onClickOnUnFollowThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toogleFollowingProgress(userId));
+        API.delFollow(userId)
+            .then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unfollow(userId));
+                }
+            })
+            .catch((error) => {
+                console.log('unfollow error', error);
+            })
+            .finally(() => {
+                dispatch(toogleUnFollowingProgress(userId));
+            });
+    };
 }
 
 export default usersReducer;
