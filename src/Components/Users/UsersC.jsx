@@ -28,7 +28,7 @@ const Users = (props) => {
                       (f) => f === user.id,
                     )}
                     onClick={() => {
-                      props.onClickOnUnFollow(user.id);
+                      props.onClickUnFollow(user.id);
                     }}>
                     UnFollow{' '}
                   </button>

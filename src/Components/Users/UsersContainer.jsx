@@ -7,7 +7,7 @@ import {
   setCurrentPage,
   setTotalCountUsers,
   getUsersThunkCreator,
-  onClickOnUnFollowThunkCreator,
+  onClickUnFollowThunkCreator,
   onClickFollowThunkCreator,
 } from '../../redux/users-reducer';
 import { Images } from '../../images';
@@ -51,7 +51,7 @@ class UsersAPIContainer extends React.Component {
           sizePage={this.props.sizePage}
           folloWingInProgress={this.props.folloWingInProgress}
           onClickFollow={this.props.onClickFollow}
-          onClickOnUnFollow={this.props.onClickOnUnFollow}
+          onClickUnFollow={this.props.onClickUnFollow}
         />
       </div>
     );
@@ -76,7 +76,7 @@ const UsersContainer = connect(mapStateToProps, {
   toogleFollowingProgress,
   toogleUnFollowingProgress,
   getUsers: getUsersThunkCreator,
-  onClickOnUnFollow: onClickOnUnFollowThunkCreator,
+  onClickUnFollow: onClickUnFollowThunkCreator,
   onClickFollow: onClickFollowThunkCreator,
 })(UsersAPIContainer);
 
