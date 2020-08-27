@@ -106,7 +106,7 @@ export const onClickFollowThunkCreator = (userId) => {
     };
 }
 
-export const onClickOnUnFollowThunkCreator = (userId) => {
+export const onClickUnFollowThunkCreator = (userId) => {
     return (dispatch) => {
         dispatch(toogleFollowingProgress(userId));
         API.delFollow(userId)
