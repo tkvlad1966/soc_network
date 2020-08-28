@@ -3,8 +3,12 @@ import s from './Profile.module.css';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import { Redirect } from 'react-router-dom';
 
 const Profile = (props) => {
+  if (!props.isAuthMe) {
+    return <Redirect to="/login" />;
+  }
   return (
     <div>
       <div className={s.zastava}>
@@ -13,7 +17,7 @@ const Profile = (props) => {
         </div>
       </div>
       <div className={s.ava}>
-        <ProfileInfo profile={props.profile} />
+        <ProfileInfo profile={props.profile.profile} />
       </div>
       <MyPostsContainer />
     </div>
