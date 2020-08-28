@@ -7,7 +7,7 @@ export const toogleFollowingProgress = (userId) => ({ type: TOOGLE_IS_FOLLOWING_
 export const toogleUnFollowingProgress = (userId) => ({ type: TOOGLE_IS_UNFOLLOWING_IN_PROGRESS, userId });
 
 let initialState = {
-    isFetching: true,
+    isFetching: false,
     folloWingInProgress: []
 };
 
