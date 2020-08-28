@@ -15,7 +15,7 @@ class ProfileContainer extends React.Component {
   render() {
     return (
       <div>
-        <Profile {...this.props.profile} />
+        <Profile {...this.props} />
       </div>
     );
   }
@@ -24,6 +24,7 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => ({
   profile: state.profile,
   isFetching: state.app.isFetching,
+  isAuthMe: state.auth.isAuth,
 });
 
 export default connect(mapStateToProps, {
