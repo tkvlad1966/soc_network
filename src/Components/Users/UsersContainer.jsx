@@ -10,6 +10,7 @@ import {
 } from '../../redux/users-reducer';
 
 import { API } from '../common/api';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 class UsersAPIContainer extends React.Component {
   componentDidMount() {
@@ -63,13 +64,14 @@ let mapStateToProps = (state) => {
   };
 };
 
-const UsersContainer = connect(mapStateToProps, {
-  setCurrentPage,
-  setTotalCountUsers,
-
-  getUsers: getUsersThunkCreator,
-  onClickUnFollow: onClickUnFollowThunkCreator,
-  onClickFollow: onClickFollowThunkCreator,
-})(UsersAPIContainer);
+const UsersContainer = withAuthRedirect(
+  connect(mapStateToProps, {
+    setCurrentPage,
+    setTotalCountUsers,
+    getUsers: getUsersThunkCreator,
+    onClickUnFollow: onClickUnFollowThunkCreator,
+    onClickFollow: onClickFollowThunkCreator,
+  })(UsersAPIContainer),
+);
 
 export default UsersContainer;
