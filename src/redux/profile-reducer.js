@@ -1,4 +1,4 @@
-import { API } from '../Components/common/api';
+import { ProfileAPI } from '../Components/common/api';
 import { toogleIsFetching } from './app-reducer';
 
 
@@ -55,7 +55,7 @@ const profileReducer = (state = initialState, action) => {
 export const getUserProfileThunkCreator = (userId) => {
     return (dispatch) => {
         dispatch(toogleIsFetching(true));
-        API.getUserProfile(userId).then((data) => {
+        ProfileAPI.getUserProfile(userId).then((data) => {
             dispatch(toogleIsFetching(false));
             dispatch(setUserProfile(data));
         });

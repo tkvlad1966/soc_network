@@ -8,23 +8,12 @@ const instanse = axios.create({
     }
 })
 
-export const API = {
+export const UserAPI = {
     getUsers({ page = 1, count = 10 }) {
         return instanse.get(`users?page=${page}&count=${count}`)
             .then(response => {
                 return response.data
             })
-    },
-    getUserProfile(userId) {
-        return instanse.get(`profile/${userId}`)
-            .then(response => {
-                return response.data
-            })
-    },
-    getAuthorization() {
-        return instanse.get(`/auth/me`,
-            { sameSite: 'none', secure: true }
-        )
     },
     postFollow(userId) {
         return instanse.post(
@@ -36,6 +25,23 @@ export const API = {
             `follow/${userId}`
         )
     }
+}
+
+export const ProfileAPI = {
+    getUserProfile(userId) {
+        return instanse.get(`profile/${userId}`)
+            .then(response => {
+                return response.data
+            })
+    },
+}
+
+export const AuthAPI = {
+    getAuthorization() {
+        return instanse.get(`/auth/me`,
+            { sameSite: 'none', secure: true }
+        )
+    },
 }
 
 // export const getUsers = ({ page = 1, count = 10 }) => {
