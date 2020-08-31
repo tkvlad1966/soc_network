@@ -5,6 +5,7 @@ import { toogleIsFetching } from './app-reducer';
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 export const addPost = () => ({ type: ADD_POST });
 
@@ -12,6 +13,12 @@ export const updateNewPostText = (text) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: text,
+    };
+};
+export const setStatus = (status) => {
+    return {
+        type: SET_STATUS,
+        status: status,
     };
 };
 
@@ -26,7 +33,8 @@ let initialState = {
             { id: 3, message: 'Зустрінемося? kjjacjbbadj sdhjh acgkj', likeCount: 3 },
         ],
     newPostText: 'aaa',
-    profile: null
+    profile: null,
+    status: ''
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -44,6 +52,11 @@ const profileReducer = (state = initialState, action) => {
             stateCopy.newPostText = action.newText;
             return stateCopy;
         }
+        case SET_STATUS: {
+            let stateCopy = { ...state };
+            stateCopy.status = action.status;
+            return stateCopy;
+        }
         case SET_USER_PROFILE: {
             return { ...state, profile: action.profile };
         }
@@ -58,6 +71,26 @@ export const getUserProfileThunkCreator = (userId) => {
         ProfileAPI.getUserProfile(userId).then((data) => {
             dispatch(toogleIsFetching(false));
             dispatch(setUserProfile(data));
+        });
+    }
+}
+export const getStatusThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toogleIsFetching(true));
+        ProfileAPI.getStatus(userId).then((response) => {
+            dispatch(toogleIsFetching(false));
+            dispatch(setStatus(response.data));
+        });
+    }
+}
+export const updateStatusThunkCreator = (status) => {
+    return (dispatch) => {
+        dispatch(toogleIsFetching(true));
+        ProfileAPI.updateStatus(status).then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(toogleIsFetching(false));
+                dispatch(setStatus(status));
+            }
         });
     }
 }
