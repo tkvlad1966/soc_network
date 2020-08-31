@@ -1,5 +1,5 @@
 import { toogleIsFetching, toogleFollowingProgress, toogleUnFollowingProgress } from "./app-reducer";
-import { API } from '../Components/common/api';
+import { UserAPI } from '../Components/common/api';
 
 
 const FOLLOW = 'FOLLOW';
@@ -77,7 +77,7 @@ const usersReducer = (state = initialState, action) => {
 export const getUsersThunkCreator = (currentPage, sizePage) => {
     return (dispatch) => {
         dispatch(toogleIsFetching(true));
-        API.getUsers({
+        UserAPI.getUsers({
             page: currentPage,
             count: sizePage,
         }).then((data) => {
@@ -92,7 +92,7 @@ export const onClickFollowThunkCreator = (userId) => {
     return async (dispatch) => {
         dispatch(toogleFollowingProgress(userId));
         try {
-            const response = await API.postFollow(userId);
+            const response = await UserAPI.postFollow(userId);
             if (response.data.resultCode === 0) {
                 dispatch(follow(userId));
             }
@@ -109,7 +109,7 @@ export const onClickFollowThunkCreator = (userId) => {
 export const onClickUnFollowThunkCreator = (userId) => {
     return (dispatch) => {
         dispatch(toogleFollowingProgress(userId));
-        API.delFollow(userId)
+        UserAPI.delFollow(userId)
             .then((response) => {
                 if (response.data.resultCode === 0) {
                     dispatch(unfollow(userId));
