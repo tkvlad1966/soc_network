@@ -13,11 +13,7 @@ const Messages = (props) => {
           </div>
         );
       })}
-      <NewMessage
-        newMessageText={props.newMessageText}
-        addNewMessage={props.addNewMessage}
-        onChangeMessage={props.onChangeMessage}
-      />
+      <NewMessage addNewMessage={props.addNewMessage} />
     </div>
   );
 };
