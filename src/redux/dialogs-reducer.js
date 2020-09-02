@@ -1,16 +1,10 @@
 import { Images } from "../images";
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
-export const addMessageActionCreator = () => ({ type: ADD_MESSAGE });
+export const addMessageActionCreator = (text) => ({ type: ADD_MESSAGE, newMessage: text });
 
-export const updateNewMessageTextActionCreator = (text) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newText: text,
-    };
-};
+
 
 let initialState = {
     dialogs: [
@@ -25,23 +19,18 @@ let initialState = {
         { id: 3, message: 'Ok' },
         { id: 4, message: 'Yo' },
     ],
-    newMessageText: ''
 };
 
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE: {
-            let message = { id: 5, message: state.newMessageText };
+            let message = { id: 5, message: action.newMessage };
             let stateCopy = { ...state };
             stateCopy.messages = [...state.messages];
             stateCopy.messages.push(message);
             return stateCopy;
         }
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            let stateCopy = { ...state };
-            stateCopy.newMessageText = action.newText;
-            return stateCopy;
-        }
+
         default: return state;
     }
 

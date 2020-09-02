@@ -11,8 +11,8 @@ const MyPosts = (props) => {
       <h4>My posts</h4>
       <div>
         <PostAdd
-          newPostText={props.newPostText}
-          updateNewPostText={props.updateNewPostText}
+          // newPostText={props.newPostText}
+          // updateNewPostText={props.updateNewPostText}
           addPost={props.addPost}
         />
       </div>
