@@ -1,26 +1,28 @@
 import React from 'react';
 import s from './PostAdd.module.css';
+import { Field, reduxForm } from 'redux-form';
 
 const PostAdd = (props) => {
-  let onAddPost = () => {
-    props.addPost();
+  const onSubmit = (formData) => {
+    props.addPost(formData.textarea);
   };
 
-  let onPostChange = (event) => {
-    let text = event.target.value;
-    props.updateNewPostText(text);
-  };
+  return <PostAddReduxForm onSubmit={onSubmit} />;
+};
 
+const PostAddForm = (props) => {
   return (
-    <div>
+    <form onSubmit={props.handleSubmit}>
       <div className={s.textarea}>
-        <textarea onChange={onPostChange} value={props.newPostText} />
+        <Field name="textarea" component="textarea" />
       </div>
       <div className={s.button}>
-        <button onClick={onAddPost}>Add post</button>
+        <button>Add post</button>
       </div>
-    </div>
+    </form>
   );
 };
+
+const PostAddReduxForm = reduxForm({ form: 'post' })(PostAddForm);
 
 export default PostAdd;
