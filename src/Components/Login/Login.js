@@ -14,7 +14,6 @@ const Login = (props) => {
 }
 
 const LoginForm = (props) => {
-    console.log('rer')
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
