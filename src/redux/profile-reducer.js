@@ -3,18 +3,12 @@ import { toogleIsFetching } from './app-reducer';
 
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
-export const addPost = () => ({ type: ADD_POST });
+export const addPost = (post) => ({ type: ADD_POST, newPost: post });
 
-export const updateNewPostText = (text) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text,
-    };
-};
+
 export const setStatus = (status) => {
     return {
         type: SET_STATUS,
@@ -32,7 +26,6 @@ let initialState = {
             { id: 2, message: 'Як справи', likeCount: 2 },
             { id: 3, message: 'Зустрінемося? kjjacjbbadj sdhjh acgkj', likeCount: 3 },
         ],
-    newPostText: 'aaa',
     profile: null,
     status: ''
 };
@@ -40,18 +33,13 @@ let initialState = {
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
-            let post = { id: 5, message: state.newPostText, likeCount: 0 };
+            let post = { id: 5, message: action.newPost, likeCount: 0 };
             let stateCopy = { ...state };
             stateCopy.posts = [...state.posts];
             stateCopy.posts.push(post);
-            stateCopy.newPostText = '';
             return stateCopy;
         }
-        case UPDATE_NEW_POST_TEXT: {
-            let stateCopy = { ...state };
-            stateCopy.newPostText = action.newText;
-            return stateCopy;
-        }
+
         case SET_STATUS: {
             let stateCopy = { ...state };
             stateCopy.status = action.status;
