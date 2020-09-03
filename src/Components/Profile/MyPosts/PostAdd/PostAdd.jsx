@@ -2,6 +2,7 @@ import React from 'react';
 import s from './PostAdd.module.css';
 import { Field, reduxForm } from 'redux-form';
 import { requiredField, maxLength } from '../../../../utils/validator';
+import { Textarea } from '../../../common/FormsControls';
 
 const maxLength40 = maxLength(40);
 
@@ -19,7 +20,7 @@ const PostAddForm = (props) => {
       <div className={s.textarea}>
         <Field
           name="textarea"
-          component="textarea"
+          component={Textarea}
           validate={[requiredField, maxLength40]}
         />
       </div>
