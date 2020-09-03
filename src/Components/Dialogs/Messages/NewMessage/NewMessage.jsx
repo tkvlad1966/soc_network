@@ -1,6 +1,10 @@
 import React from 'react';
 import s from './NewMessages.module.css';
 import { Field, reduxForm } from 'redux-form';
+import { Textarea } from '../../../common/FormsControls';
+import { maxLength, requiredField } from '../../../../utils/validator';
+
+const maxLength20 = maxLength(20);
 
 const NewMessage = (props) => {
   let addNewMessage = (value) => {
@@ -21,7 +25,8 @@ const NewMessageForm = (props) => {
         <Field
           name="newMessage"
           placeholder="enter your message"
-          component="textarea"
+          component={Textarea}
+          validate={[requiredField, maxLength20]}
         />
       </div>
       <div>
