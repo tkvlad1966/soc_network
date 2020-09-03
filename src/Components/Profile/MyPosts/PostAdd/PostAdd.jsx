@@ -1,6 +1,9 @@
 import React from 'react';
 import s from './PostAdd.module.css';
 import { Field, reduxForm } from 'redux-form';
+import { requiredField, maxLength } from '../../../../utils/validator';
+
+const maxLength40 = maxLength(40);
 
 const PostAdd = (props) => {
   const onSubmit = (formData) => {
@@ -14,7 +17,11 @@ const PostAddForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div className={s.textarea}>
-        <Field name="textarea" component="textarea" />
+        <Field
+          name="textarea"
+          component="textarea"
+          validate={[requiredField, maxLength40]}
+        />
       </div>
       <div className={s.button}>
         <button>Add post</button>
