@@ -49,6 +49,14 @@ export const AuthAPI = {
             { sameSite: 'none', secure: true }
         )
     },
+    login(email, password, remembreMe) {
+        return instanse.post(`/auth/login`,
+            { email, password, remembreMe }
+        )
+    },
+    logout() {
+        return instanse.delete(`/auth/login`)
+    }
 }
 
 // export const getUsers = ({ page = 1, count = 10 }) => {
