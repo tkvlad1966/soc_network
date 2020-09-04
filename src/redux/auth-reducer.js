@@ -21,7 +21,7 @@ const authReducer = (state = initialState, action) => {
                 {
                     ...state,
                     ...action.data,
-                    isAuth: true
+
                 }
             )
         }
@@ -38,8 +38,8 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (userId, login, email) => (
-    { type: SET_USER_DATA, data: { userId, login, email } });
+export const setAuthUserData = (userId, login, email, isAuth) => (
+    { type: SET_USER_DATA, data: { userId, login, email, isAuth } });
 export const setUserPhotos = (photos) => (
     { type: SET_USER_PFOTOS, photos });
 
@@ -48,10 +48,28 @@ export const getAuthUserData = () => {
         AuthAPI.getAuthorization().then((response) => {
             if (response.data.resultCode === 0) {
                 let { id, login, email } = response.data.data;
-                dispatch(setAuthUserData(id, login, email));
+                dispatch(setAuthUserData(id, login, email, true));
                 ProfileAPI.getUserProfile(id).then((data) => {
                     dispatch(setUserPhotos(data.photos.small));
                 });
+            }
+        });
+    }
+}
+export const login = (email, password, remembreMe) => {
+    return (dispatch) => {
+        AuthAPI.login(email, password, remembreMe).then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserData());
+            }
+        });
+    }
+}
+export const logout = () => {
+    return (dispatch) => {
+        AuthAPI.logout().then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthUserData(null, null, null, false));
             }
         });
     }
