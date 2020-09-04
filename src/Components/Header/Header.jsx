@@ -9,7 +9,13 @@ const Header = (props) => {
       <img src="https://t3.ftcdn.net/jpg/02/94/32/50/240_F_294325088_MEVHPiZe4mqXL2lBYiIWu5698mdYfv5s.jpg" />
       <div className={s.login_block}>
         <img src={props.photos != null ? props.photos : Images.logo} />
-        {props.isAuth ? props.login : <NavLink to={'/login'}>Login</NavLink>}
+        {props.isAuth ? (
+          <span>
+            {props.login} -<button onClick={props.logout}>Logout</button>{' '}
+          </span>
+        ) : (
+          <NavLink to={'/login'}>Login</NavLink>
+        )}
       </div>
     </header>
   );
