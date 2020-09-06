@@ -13,9 +13,13 @@ export const minLength = (min) => (value) => {
     return (value && value.length < min ? `<${min} characters` : undefined)
 }
 
+const hasNumberAndLetter = (value) => {
+    return !/^[A-Z]+\d/i.test(value)
+}
+
 export const passIsLetterAndNumbre = (value) => {
 
     return (
-        value && !/^[A-Z]+\d/i.test(value) ? 'Invalide' : undefined
+        value && hasNumberAndLetter(value) ? 'Invalid' : undefined
     )
 }
