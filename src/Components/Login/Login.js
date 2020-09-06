@@ -5,6 +5,7 @@ import { Input } from '../common/FormsControls';
 import { connect } from 'react-redux';
 import { login } from '../../redux/auth-reducer';
 import { Redirect } from 'react-router-dom';
+import s from '../common/FormsControls/index.module.css'
 
 const maxLength30 = maxLength(30)
 const minLength6 = minLength(6)
@@ -14,7 +15,7 @@ const Login = (props) => {
     const onSubmit = (formData) => {
         props.login(formData.email, formData.password, formData.remembreMe)
     }
-    debugger
+
     if (props.isAuth) {
         return (
             <Redirect to={'/profile'} />
@@ -29,6 +30,7 @@ const Login = (props) => {
 }
 
 const LoginForm = (props) => {
+    console.log(props.error)
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -42,6 +44,9 @@ const LoginForm = (props) => {
             <div>
                 <Field type={'checkbox'} name={'rememberMe'} component={'input'} /> remembre me
             </div>
+            {props.error ?
+                <div><span className={s.formsControlsError}>{props.error}</span></div> : ''}
+
             < button > Login</button >
         </form>
     )
