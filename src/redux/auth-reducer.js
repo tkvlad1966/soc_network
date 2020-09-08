@@ -46,7 +46,7 @@ export const setUserPhotos = (photos) => (
 
 export const getAuthUserData = () => {
     return (dispatch) => {
-        AuthAPI.getAuthorization().then((response) => {
+        return AuthAPI.getAuthorization().then((response) => {
             if (response.data.resultCode === 0) {
                 let { id, login, email } = response.data.data;
                 dispatch(setAuthUserData(id, login, email, true));

@@ -16,8 +16,10 @@ class ProfileContainer extends React.Component {
     if (!userId) {
       userId = this.props.userIdAuth;
     }
-    this.props.getUserProfile(userId);
-    this.props.getStatus(userId);
+    if (userId) {
+      this.props.getUserProfile(userId);
+      this.props.getStatus(userId);
+    }
   }
   render() {
     return (
@@ -46,5 +48,5 @@ export default compose(
     updateStatus: updateStatusThunkCreator,
   }),
   withRouter,
-  withAuthRedirect,
+  // withAuthRedirect,
 )(ProfileContainer);
