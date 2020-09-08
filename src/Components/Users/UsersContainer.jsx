@@ -66,7 +66,7 @@ let mapStateToProps = (state) => {
 };
 
 const UsersContainer = compose(
-  withAuthRedirect,
+  // withAuthRedirect,
   connect(mapStateToProps, {
     setCurrentPage,
     setTotalCountUsers,
