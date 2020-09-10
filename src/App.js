@@ -20,35 +20,30 @@ class App extends Component {
     this.props.initializeApp();
   }
   render() {
-    if (!this.props.initialized)
-      return <spinner />
+    if (!this.props.initialized) return <spinner />;
     return (
-      < BrowserRouter >
+      <BrowserRouter>
         <div className="app-wrapper">
           <HeaderContainer />
           <Route render={() => <NavBarContainer />} />
-          <div className='app-wrapper-content'>
-            <Route path='/login'
-              render={() => <Login />} />
-            <Route path='/dialogs'
-              render={() => <DialogsContainer />}
-            />
-            <Route path='/profile/:userId?'
+          <div className="app-wrapper-content">
+            <Route path="/login" render={() => <Login />} />
+            <Route path="/dialogs" render={() => <DialogsContainer />} />
+            <Route
+              path="/profile/:userId?"
               render={() => <ProfileContainer />}
             />
-            <Route path='/music' component={Music} />
-            <Route path='/news' component={News} />
-            <Route path='/users'
-              render={() => <UsersContainer />} />
-            <Route path='/settings' component={Setting} />
+            <Route path="/music" component={Music} />
+            <Route path="/news" component={News} />
+            <Route path="/users" render={() => <UsersContainer />} />
+            <Route path="/settings" component={Setting} />
           </div>
         </div>
-      </BrowserRouter >
-
+      </BrowserRouter>
     );
   }
 }
 
-const mapStateToProps = (state) => ({ initialized: state.app.initialized })
+const mapStateToProps = (state) => ({ initialized: state.app.initialized });
 
 export default compose(connect(mapStateToProps, { initializeApp }))(App);

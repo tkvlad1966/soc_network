@@ -1,7 +1,8 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
 import { Images } from '../../../images';
-import ProfileStatus from './ProfileStatus/ProfileStatus';
+// import ProfileStatus from './ProfileStatus/ProfileStatus';
+import ProfileStatusIsHouc from './ProfileStatus/ProfileStatusIsHouc';
 
 const ProfileInfo = (props) => {
   return (
@@ -23,7 +24,7 @@ const ProfileInfo = (props) => {
         </div>
       </div>
       <div>
-        <ProfileStatus
+        <ProfileStatusIsHouc
           status={props.status}
           updateStatus={props.updateStatus}
         />
