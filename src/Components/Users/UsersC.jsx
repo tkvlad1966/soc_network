@@ -3,7 +3,9 @@ import s from './UsersC.module.css';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Images } from '../../images';
 
-const Users = (props) => {
+const Users = React.memo((props) => {
+  console.log('render');
+
   return (
     <div>
       {props.users.map((user) => {
@@ -68,7 +70,7 @@ const Users = (props) => {
       </div>
     </div>
   );
-};
+});
 // }
 
 export default withRouter(Users);
