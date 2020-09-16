@@ -1,9 +1,9 @@
 .app-wrapper {
   display: grid;
   grid-template-areas:
-    "h h"
-    "n c";
-  grid-template-rows: 60px 1fr;
+    'h h'
+    'n c';
+  grid-template-rows: 1fr 12fr;
   grid-template-columns: 180px 10fr;
   grid-gap: 10px;
 }
