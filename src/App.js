@@ -13,37 +13,35 @@ import Login from './Components/Login/Login';
 import { initializeApp } from './redux/app-reducer';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import spinner from './Components/common/spinner';
+import Spinner from './Components/common/spinner';
 
 class App extends Component {
   componentDidMount() {
     this.props.initializeApp();
   }
   render() {
-    if (!this.props.initialized) return <spinner />;
+    if (!this.props.initialized) return <Spinner />;
     return (
-      <BrowserRouter>
-        <div className="app-wrapper">
-          <HeaderContainer />
-          <Route render={() => <NavBarContainer />} />
-          <div className="app-wrapper-content">
-            <Route path="/login" render={() => <Login />} />
-            <Route path="/dialogs" render={() => <DialogsContainer />} />
-            <Route
-              path="/profile/:userId?"
-              render={() => <ProfileContainer />}
-            />
-            <Route path="/music" component={Music} />
-            <Route path="/news" component={News} />
-            <Route path="/users" render={() => <UsersContainer />} />
-            <Route path="/settings" component={Setting} />
-          </div>
+      <div className="app-wrapper">
+        <HeaderContainer />
+        <Route render={() => <NavBarContainer />} />
+        <div className="app-wrapper-content">
+          <Route path="/login" render={() => <Login />} />
+          <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+          <Route path="/music" component={Music} />
+          <Route path="/news" component={News} />
+          <Route path="/users" render={() => <UsersContainer />} />
+          <Route path="/settings" component={Setting} />
         </div>
-      </BrowserRouter>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({ initialized: state.app.initialized });
 
-export default compose(connect(mapStateToProps, { initializeApp }))(App);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { initializeApp }),
+)(App);

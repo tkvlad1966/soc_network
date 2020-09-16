@@ -71,6 +71,5 @@ const Users = React.memo((props) => {
     </div>
   );
 });
-// }
 
 export default withRouter(Users);

@@ -1,86 +1,82 @@
 import { ProfileAPI } from '../Components/common/api';
 import { toogleIsFetching } from './app-reducer';
 
-
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
 export const addPost = (post) => ({ type: ADD_POST, newPost: post });
 
-
 export const setStatus = (status) => {
-    return {
-        type: SET_STATUS,
-        status: status,
-    };
+  return {
+    type: SET_STATUS,
+    status: status,
+  };
 };
 
-export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
-
+export const setUserProfile = (profile) => ({
+  type: SET_USER_PROFILE,
+  profile,
+});
 
 let initialState = {
-    posts:
-        [
-            { id: 1, message: 'ПРивіт', likeCount: 3 },
-            { id: 2, message: 'Як справи', likeCount: 2 },
-            { id: 3, message: 'Зустрінемося? kjjacjbbadj sdhjh acgkj', likeCount: 3 },
-        ],
-    profile: null,
-    status: ''
+  posts: [
+    { id: 1, message: 'ПРивіт', likeCount: 3 },
+    { id: 2, message: 'Як справи', likeCount: 2 },
+    { id: 3, message: 'Зустрінемося? kjjacjbbadj sdhjh acgkj', likeCount: 3 },
+  ],
+  profile: null,
+  status: '',
 };
 
 const profileReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_POST: {
-            let post = { id: 5, message: action.newPost, likeCount: 0 };
-            let stateCopy = { ...state };
-            stateCopy.posts = [...state.posts];
-            stateCopy.posts.push(post);
-            return stateCopy;
-        }
-
-        case SET_STATUS: {
-            let stateCopy = { ...state };
-            stateCopy.status = action.status;
-            return stateCopy;
-        }
-        case SET_USER_PROFILE: {
-            return { ...state, profile: action.profile };
-        }
-        default: return state;
+  switch (action.type) {
+    case ADD_POST: {
+      let post = { id: 5, message: action.newPost, likeCount: 0 };
+      let stateCopy = { ...state };
+      stateCopy.posts = [...state.posts];
+      stateCopy.posts.push(post);
+      return stateCopy;
     }
 
-}
+    case SET_STATUS: {
+      let stateCopy = { ...state };
+      stateCopy.status = action.status;
+      return stateCopy;
+    }
+    case SET_USER_PROFILE: {
+      return { ...state, profile: action.profile };
+    }
+    default:
+      return state;
+  }
+};
 
 export const getUserProfileThunkCreator = (userId) => {
-    return (dispatch) => {
-        dispatch(toogleIsFetching(true));
-        ProfileAPI.getUserProfile(userId).then((data) => {
-            dispatch(toogleIsFetching(false));
-            dispatch(setUserProfile(data));
-        });
-    }
-}
+  return async (dispatch) => {
+    dispatch(toogleIsFetching(true));
+    const response = await ProfileAPI.getUserProfile(userId);
+    dispatch(toogleIsFetching(false));
+    dispatch(setUserProfile(response));
+  };
+};
 export const getStatusThunkCreator = (userId) => {
-    return (dispatch) => {
-        dispatch(toogleIsFetching(true));
-        ProfileAPI.getStatus(userId).then((response) => {
-            dispatch(toogleIsFetching(false));
-            dispatch(setStatus(response.data));
-        });
-    }
-}
+  return async (dispatch) => {
+    dispatch(toogleIsFetching(true));
+    const response = await ProfileAPI.getStatus(userId);
+    dispatch(toogleIsFetching(false));
+    dispatch(setStatus(response.data));
+  };
+};
 export const updateStatusThunkCreator = (status) => {
-    return (dispatch) => {
-        dispatch(toogleIsFetching(true));
-        ProfileAPI.updateStatus(status).then((response) => {
-            if (response.data.resultCode === 0) {
-                dispatch(toogleIsFetching(false));
-                dispatch(setStatus(status));
-            }
-        });
+  return async (dispatch) => {
+    dispatch(toogleIsFetching(true));
+    const response = await ProfileAPI.updateStatus(status);
+    if (response.data.resultCode === 0) {
+      dispatch(toogleIsFetching(false));
+      dispatch(setStatus(status));
     }
-}
+  };
+};
 
 export default profileReducer;

@@ -5,16 +5,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
-import Spinner from './Components/common/spinner'
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import Spinner from './Components/common/spinner';
+import { BrowserRouter } from 'react-router-dom';
 
 // let rerenderEntireTree = (state) => {
 ReactDOM.render(
+  <BrowserRouter>
     <Provider store={store}>
-        <Spinner />
-        <App />
-    </Provider>,
-    document.getElementById('root')
+      <Spinner />
+      <App />
+    </Provider>
+  </BrowserRouter>,
+  document.getElementById('root'),
 );
 // }
 
