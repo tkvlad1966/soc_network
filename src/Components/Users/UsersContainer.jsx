@@ -24,23 +24,24 @@ class UsersAPIContainer extends React.Component {
   };
 
   render() {
-    const { isFetching } = this.props;
-    let countPage = Math.ceil(this.props.totalCountUsers / this.props.sizePage);
-    let pages = [];
-    for (
-      let i = this.props.currentPage - 5;
-      i <= this.props.currentPage + 5 && i <= countPage;
-      i++
-    ) {
-      if (i > 0) {
-        pages.push(i);
-      }
-    }
+    // const { isFetching } = this.props;
+    // let countPage = Math.ceil(this.props.totalCountUsers / this.props.sizePage);
+    // let pages = [];
+    // for (
+    //   let i = this.props.currentPage - 5;
+    //   i <= this.props.currentPage + 5 && i <= countPage;
+    //   i++
+    // ) {
+    //   if (i > 0) {
+    //     pages.push(i);
+    //   }
+    // }
 
     return (
       <div>
         <Users
-          pages={pages}
+          // pages={pages}
+          totalCountUsers={this.props.totalCountUsers}
           currentPage={this.props.currentPage}
           onPageChange={this.onPageChange}
           users={this.props.users}
@@ -60,7 +61,7 @@ let mapStateToProps = (state) => {
     totalCountUsers: state.usersPage.totalCountUsers,
     currentPage: state.usersPage.currentPage,
     sizePage: state.usersPage.sizePage,
-    isFetching: state.app.isFetching,
+    // isFetching: state.app.isFetching,
     folloWingInProgress: state.app.folloWingInProgress,
   };
 };

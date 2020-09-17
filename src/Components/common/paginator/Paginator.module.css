@@ -1,0 +1,9 @@
+.selected {
+  font-weight: bold;
+  border: 1px solid blue;
+  margin: 5px;
+}
+
+.unselected {
+  margin: 2px;
+}

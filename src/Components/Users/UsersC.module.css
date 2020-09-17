@@ -1,48 +1,36 @@
 .users {
-    display: grid;
-    grid-template-columns: 80px 8fr;
-    grid-gap: 5px;
-    margin: 10px;
-
+  display: grid;
+  grid-template-columns: 80px 8fr;
+  grid-gap: 5px;
+  margin: 10px;
 }
 
 .userFollowed {
-    padding: 2px;
-    text-align: center;
+  padding: 2px;
+  text-align: center;
 }
 
 .userFollowed img {
-    border: 1px solid goldenrod;
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    background-color: grey;
-    border-radius: 50%;
-    margin-right: 5px;
+  border: 1px solid goldenrod;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  background-color: grey;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
 .userDate {
-    text-align: none;
-    background-color: rgb(188, 218, 188);
-    border: 2px solid #6aa8d1;
-    border-radius: 1em;
-    padding: 1%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-right: 10em;
+  text-align: none;
+  background-color: rgb(188, 218, 188);
+  border: 2px solid #6aa8d1;
+  border-radius: 1em;
+  padding: 1%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-right: 10em;
 }
-
 
 .userDateRight {
-    text-align: right;
-}
-
-.selected {
-    font-weight: bold;
-    border: 1px solid blue;
-    margin: 5px;
-}
-
-.unselected {
-    margin: 2px;
+  text-align: right;
 }

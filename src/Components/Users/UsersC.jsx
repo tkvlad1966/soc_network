@@ -2,10 +2,9 @@ import React from 'react';
 import s from './UsersC.module.css';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Images } from '../../images';
+import Paginator from '../common/paginator/paginator';
 
 const Users = React.memo((props) => {
-  console.log('render');
-
   return (
     <div>
       {props.users.map((user) => {
@@ -56,18 +55,13 @@ const Users = React.memo((props) => {
           </div>
         );
       })}
-      <div>
-        {props.pages.map((num) => (
-          <span
-            className={num === props.currentPage ? s.selected : s.unselected}
-            onClick={() => {
-              props.onPageChange(num);
-            }}
-            key={num}>
-            {num}
-          </span>
-        ))}
-      </div>
+
+      <Paginator
+        currentPage={props.currentPage}
+        onPageChange={props.onPageChange}
+        totalCountUsers={props.totalCountUsers}
+        sizePage={props.sizePage}
+      />
     </div>
   );
 });
