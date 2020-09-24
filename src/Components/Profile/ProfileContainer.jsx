@@ -1,24 +1,35 @@
-import React from 'react';
-import Profile from './Profile';
-import { connect } from 'react-redux';
+import React from "react";
+import Profile from "./Profile";
+import { connect } from "react-redux";
 import {
   getUserProfileThunkCreator,
   getStatusThunkCreator,
   updateStatusThunkCreator,
-} from '../../redux/profile-reducer';
-import { withRouter, Redirect } from 'react-router-dom';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
-import { compose } from 'redux';
+} from "../../redux/profile-reducer";
+import { withRouter, Redirect } from "react-router-dom";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.match.params.userId;
     if (!userId) {
       userId = this.props.userIdAuth;
+      if (!userId) {
+        this.props.history.push("/login");
+      }
     }
     if (userId) {
       this.props.getUserProfile(userId);
       this.props.getStatus(userId);
+    }
+  }
+  componentDidMount() {
+    this.refreshProfile();
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.match.params.userId !== prevProps.match.params.userId) {
+      this.refreshProfile();
     }
   }
   render() {
@@ -47,6 +58,6 @@ export default compose(
     getStatus: getStatusThunkCreator,
     updateStatus: updateStatusThunkCreator,
   }),
-  withRouter,
+  withRouter
   // withAuthRedirect,
 )(ProfileContainer);
