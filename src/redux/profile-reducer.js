@@ -4,6 +4,7 @@ import { toogleIsFetching } from "./app-reducer";
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
+const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
 export const addPost = (post) => ({ type: ADD_POST, newPost: post });
 
@@ -11,6 +12,13 @@ export const setStatus = (status) => {
   return {
     type: SET_STATUS,
     status: status,
+  };
+};
+
+export const savePhotoSuccess = (photos) => {
+  return {
+    type: SAVE_PHOTO_SUCCESS,
+    photos: photos,
   };
 };
 
@@ -47,6 +55,9 @@ const profileReducer = (state = initialState, action) => {
     case SET_USER_PROFILE: {
       return { ...state, profile: action.profile };
     }
+    case SAVE_PHOTO_SUCCESS: {
+      return { ...state, profile: { ...state.profile, photos: action.photos } };
+    }
     default:
       return state;
   }
@@ -77,6 +88,15 @@ export const updateStatusThunkCreator = (status) => {
       dispatch(setStatus(status));
     }
   };
+};
+
+export const savePhotoThunkCreator = (file) => async (dispatch) => {
+  dispatch(toogleIsFetching(true));
+  const response = await ProfileAPI.savePhoto(file);
+  if (response.data.resultCode === 0) {
+    dispatch(toogleIsFetching(false));
+    dispatch(savePhotoSuccess(response.data.data.photos));
+  }
 };
 
 export default profileReducer;
