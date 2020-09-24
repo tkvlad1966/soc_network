@@ -1,9 +1,9 @@
-import { ProfileAPI } from '../Components/common/api';
-import { toogleIsFetching } from './app-reducer';
+import { ProfileAPI } from "../Components/common/api";
+import { toogleIsFetching } from "./app-reducer";
 
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_STATUS = 'SET_STATUS';
+const ADD_POST = "ADD-POST";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
 
 export const addPost = (post) => ({ type: ADD_POST, newPost: post });
 
@@ -21,12 +21,12 @@ export const setUserProfile = (profile) => ({
 
 let initialState = {
   posts: [
-    { id: 1, message: 'ПРивіт', likeCount: 3 },
-    { id: 2, message: 'Як справи', likeCount: 2 },
-    { id: 3, message: 'Зустрінемося? kjjacjbbadj sdhjh acgkj', likeCount: 3 },
+    { id: 1, message: "ПРивіт", likeCount: 3 },
+    { id: 2, message: "Як справи", likeCount: 2 },
+    { id: 3, message: "Зустрінемося? kjjacjbbadj sdhjh acgkj", likeCount: 3 },
   ],
   profile: null,
-  status: '',
+  status: "",
 };
 
 const profileReducer = (state = initialState, action) => {

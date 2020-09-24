@@ -1,9 +1,9 @@
-import { getAuthUserData } from './auth-reducer';
+import { getAuthUserData } from "./auth-reducer";
 
-const TOOGLE_IS_FETCHING = 'TOOGLE_IS_FETCHING';
-const TOOGLE_IS_FOLLOWING_IN_PROGRESS = 'TOOGLE_IS_FOLLOWING_IN_PROGRESS';
-const TOOGLE_IS_UNFOLLOWING_IN_PROGRESS = 'TOOGLE_IS_UNFOLLOWING_IN_PROGRESS';
-const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
+const TOOGLE_IS_FETCHING = "TOOGLE_IS_FETCHING";
+const TOOGLE_IS_FOLLOWING_IN_PROGRESS = "TOOGLE_IS_FOLLOWING_IN_PROGRESS";
+const TOOGLE_IS_UNFOLLOWING_IN_PROGRESS = "TOOGLE_IS_UNFOLLOWING_IN_PROGRESS";
+const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS";
 
 export const toogleIsFetching = (isFetching) => ({
   type: TOOGLE_IS_FETCHING,
@@ -49,7 +49,7 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         folloWingInProgress: state.folloWingInProgress.filter(
-          (userId) => userId != action.userId,
+          (userId) => userId !== action.userId
         ),
       };
     }
@@ -60,7 +60,6 @@ const appReducer = (state = initialState, action) => {
 
 export const initializeApp = () => (dispatch) => {
   let promise = dispatch(getAuthUserData());
-  console.log('resultDispatch', promise);
   promise.then(() => {
     dispatch(initializedSuccess());
   });
