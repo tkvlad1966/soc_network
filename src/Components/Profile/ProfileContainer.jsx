@@ -5,6 +5,7 @@ import {
   getUserProfileThunkCreator,
   getStatusThunkCreator,
   updateStatusThunkCreator,
+  savePhotoThunkCreator,
 } from "../../redux/profile-reducer";
 import { withRouter, Redirect } from "react-router-dom";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
@@ -15,9 +16,6 @@ class ProfileContainer extends React.Component {
     let userId = this.props.match.params.userId;
     if (!userId) {
       userId = this.props.userIdAuth;
-      if (!userId) {
-        this.props.history.push("/login");
-      }
     }
     if (userId) {
       this.props.getUserProfile(userId);
@@ -28,14 +26,15 @@ class ProfileContainer extends React.Component {
     this.refreshProfile();
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.match.params.userId !== prevProps.match.params.userId) {
+    if (this.props.match.params.userId != prevProps.match.params.userId)
       this.refreshProfile();
-    }
   }
   render() {
     return (
       <div>
         <Profile
+          savePhoto={this.props.savePhoto}
+          isOwner={!this.props.match.params.userId}
           {...this.props.profile}
           {...this.props.status}
           updateStatus={this.props.updateStatus}
@@ -57,6 +56,7 @@ export default compose(
     getUserProfile: getUserProfileThunkCreator,
     getStatus: getStatusThunkCreator,
     updateStatus: updateStatusThunkCreator,
+    savePhoto: savePhotoThunkCreator,
   }),
   withRouter
   // withAuthRedirect,
