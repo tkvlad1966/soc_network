@@ -18,7 +18,7 @@ const ProfileStatusIsHouc = (props) => {
   };
   const deActiveEditMode = () => {
     setEditMode(false);
-    props.updateStatus(status);
+    if (props.isOwner) props.updateStatus(status);
   };
   return (
     <div>
@@ -33,7 +33,7 @@ const ProfileStatusIsHouc = (props) => {
             onChange={OnStatusChange}
             autoFocus={true}
             onBlur={deActiveEditMode}
-            value={status || undefined}
+            value={status || ""}
           />
         </div>
       )}
