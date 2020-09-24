@@ -1,8 +1,8 @@
-import { AuthAPI, ProfileAPI } from '../Components/common/api';
-import { stopSubmit } from 'redux-form';
+import { AuthAPI, ProfileAPI } from "../Components/common/api";
+import { stopSubmit } from "redux-form";
 
-const SET_USER_DATA = 'SET_USER_DATA';
-const SET_USER_PFOTOS = 'SET_USER_PFOTOS';
+const SET_USER_DATA = "SET_USER_DATA";
+const SET_USER_PFOTOS = "SET_USER_PFOTOS";
 
 let initialState = {
   userId: null,
@@ -59,8 +59,8 @@ export const login = (email, password, remembreMe) => {
       let message =
         response.data.messages.length > 0
           ? response.data.messages
-          : 'Some error';
-      dispatch(stopSubmit('login', { _error: message }));
+          : "Some error";
+      dispatch(stopSubmit("login", { _error: message }));
     }
   };
 };
