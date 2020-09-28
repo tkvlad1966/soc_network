@@ -5,9 +5,15 @@
 
 .login_block {
   float: right;
-  margin-right: 3rem;
+  margin: 1rem;
 }
 
 .header img {
-  width: 60px;
+  width: 80px;
+}
+
+.login_block img {
+  width: 40px;
+  border: 2px skyblue;
+  border-radius: 45%;
 }

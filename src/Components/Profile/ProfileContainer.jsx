@@ -6,6 +6,7 @@ import {
   getStatusThunkCreator,
   updateStatusThunkCreator,
   savePhotoThunkCreator,
+  saveProfileThunkCreator,
 } from "../../redux/profile-reducer";
 import { withRouter, Redirect } from "react-router-dom";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
@@ -34,6 +35,7 @@ class ProfileContainer extends React.Component {
       <div>
         <Profile
           savePhoto={this.props.savePhoto}
+          saveProfile={this.props.saveProfile}
           isOwner={!this.props.match.params.userId}
           {...this.props.profile}
           {...this.props.status}
@@ -57,6 +59,7 @@ export default compose(
     getStatus: getStatusThunkCreator,
     updateStatus: updateStatusThunkCreator,
     savePhoto: savePhotoThunkCreator,
+    saveProfile: saveProfileThunkCreator,
   }),
   withRouter
   // withAuthRedirect,

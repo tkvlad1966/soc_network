@@ -45,6 +45,9 @@ export const ProfileAPI = {
   getStatus(userId) {
     return instanse.get(`profile/status/${userId}`);
   },
+  saveProfile(profile) {
+    return instanse.put(`profile`, profile);
+  },
 };
 
 export const AuthAPI = {

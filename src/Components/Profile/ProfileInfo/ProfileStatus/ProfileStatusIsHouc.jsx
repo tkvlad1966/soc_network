@@ -22,6 +22,7 @@ const ProfileStatusIsHouc = (props) => {
   };
   return (
     <div>
+      <b>Status:</b>
       {!editMode && (
         <span onDoubleClick={ActiveEditMode}>{props.status || "_ _ _ _"}</span>
       )}
