@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { ProfileAPI } from "../Components/common/api";
 import { toogleIsFetching } from "./app-reducer";
 
@@ -96,6 +97,25 @@ export const savePhotoThunkCreator = (file) => async (dispatch) => {
   if (response.data.resultCode === 0) {
     dispatch(toogleIsFetching(false));
     dispatch(savePhotoSuccess(response.data.data.photos));
+  }
+};
+export const saveProfileThunkCreator = (profile) => async (
+  dispatch,
+  getState
+) => {
+  const userId = getState().auth.userId;
+  dispatch(toogleIsFetching(true));
+  const response = await ProfileAPI.saveProfile(profile);
+  if (response.data.resultCode === 0) {
+    dispatch(toogleIsFetching(false));
+    dispatch(getUserProfileThunkCreator(userId));
+  } else {
+    dispatch(toogleIsFetching(false));
+    let message =
+      response.data.messages.length > 0
+        ? response.data.messages[0]
+        : "Some error";
+    dispatch(stopSubmit("edit-profile", { _error: message }));
   }
 };
 
