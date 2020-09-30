@@ -54,11 +54,22 @@ export const AuthAPI = {
   getAuthorization() {
     return instanse.get(`/auth/me`, { sameSite: "none", secure: true });
   },
-  login(email, password, remembreMe) {
-    return instanse.post(`/auth/login`, { email, password, remembreMe });
+  login(email, password, remembreMe, captcha) {
+    return instanse.post(`/auth/login`, {
+      email,
+      password,
+      remembreMe,
+      captcha,
+    });
   },
   logout() {
     return instanse.delete(`/auth/login`);
+  },
+};
+
+export const securityAPI = {
+  getCaptchaUrl() {
+    return instanse.get("security/get-captcha-url");
   },
 };
 
