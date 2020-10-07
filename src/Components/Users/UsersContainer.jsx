@@ -1,17 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Users from './UsersC';
+import React from "react";
+import { connect } from "react-redux";
+import Users from "./UsersC";
 import {
   setCurrentPage,
   setTotalCountUsers,
   getUsersThunkCreator,
   onClickUnFollowThunkCreator,
   onClickFollowThunkCreator,
-} from '../../redux/users-reducer';
+} from "../../redux/users-reducer";
 
-import { API } from '../common/api';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
-import { compose } from 'redux';
+// import { API } from '../common/api';
+// import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose } from "redux";
 
 class UsersAPIContainer extends React.Component {
   componentDidMount() {
@@ -61,7 +61,7 @@ let mapStateToProps = (state) => {
     totalCountUsers: state.usersPage.totalCountUsers,
     currentPage: state.usersPage.currentPage,
     sizePage: state.usersPage.sizePage,
-    // isFetching: state.app.isFetching,
+    isFetching: state.app.isFetching,
     folloWingInProgress: state.app.folloWingInProgress,
   };
 };
@@ -74,7 +74,7 @@ const UsersContainer = compose(
     getUsers: getUsersThunkCreator,
     onClickUnFollow: onClickUnFollowThunkCreator,
     onClickFollow: onClickFollowThunkCreator,
-  }),
+  })
 )(UsersAPIContainer);
 
 export default UsersContainer;
