@@ -2,35 +2,26 @@ import {
   toogleIsFetching,
   toogleFollowingProgress,
   toogleUnFollowingProgress,
-} from './app-reducer';
-import { UserAPI } from '../Components/common/api';
+} from "./app-reducer";
+import { UserAPI } from "../Components/common/api";
+import { UserType } from "../type";
 
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET_USERS';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_TOTAL_COUNT_USERS = 'SET_TOTAL_COUNT_USERS';
-
-export const follow = (usersid) => ({ type: FOLLOW, usersid });
-export const unfollow = (usersid) => ({ type: UNFOLLOW, usersid });
-export const setUsers = (users) => ({ type: SET_USERS, users });
-export const setCurrentPage = (currentPage) => ({
-  type: SET_CURRENT_PAGE,
-  currentPage: currentPage,
-});
-export const setTotalCountUsers = (totalCountUsers) => ({
-  type: SET_TOTAL_COUNT_USERS,
-  totalCountUsers,
-});
+const FOLLOW = "FOLLOW";
+const UNFOLLOW = "UNFOLLOW";
+const SET_USERS = "SET_USERS";
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_TOTAL_COUNT_USERS = "SET_TOTAL_COUNT_USERS";
 
 let initialState = {
-  users: [],
+  users: [] as Array<UserType>,
   totalCountUsers: 0,
   currentPage: 1,
   sizePage: 6,
 };
 
-const usersReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState;
+
+const usersReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     case FOLLOW: {
       return {
@@ -78,8 +69,62 @@ const usersReducer = (state = initialState, action) => {
   }
 };
 
-export const getUsersThunkCreator = (currentPage, sizePage) => {
-  return async (dispatch) => {
+type FollowActionType = {
+  type: typeof FOLLOW;
+  userid: number;
+};
+
+export const follow = (userid: number): FollowActionType => ({
+  type: FOLLOW,
+  userid,
+});
+
+type UnfollowActionType = {
+  type: typeof UNFOLLOW;
+  userid: number;
+};
+
+export const unfollow = (userid: number): UnfollowActionType => ({
+  type: UNFOLLOW,
+  userid,
+});
+
+type SetUsersActionType = {
+  type: typeof SET_USERS;
+  users: Array<UserType>;
+};
+
+export const setUsers = (users: Array<UserType>): SetUsersActionType => ({
+  type: SET_USERS,
+  users,
+});
+
+type SetCurrentPageActionType = {
+  type: typeof SET_CURRENT_PAGE;
+  currentPage: number;
+};
+
+export const setCurrentPage = (
+  currentPage: number
+): SetCurrentPageActionType => ({
+  type: SET_CURRENT_PAGE,
+  currentPage: currentPage,
+});
+
+type SetTotalCountUsersActionType = {
+  type: typeof SET_TOTAL_COUNT_USERS;
+  totalCountUsers: number;
+};
+
+export const setTotalCountUsers = (
+  totalCountUsers: number
+): SetTotalCountUsersActionType => ({
+  type: SET_TOTAL_COUNT_USERS,
+  totalCountUsers,
+});
+
+export const getUsersThunkCreator = (currentPage: number, sizePage: number) => {
+  return async (dispatch: any) => {
     dispatch(toogleIsFetching(true));
     const response = await UserAPI.getUsers({
       page: currentPage,
@@ -91,8 +136,8 @@ export const getUsersThunkCreator = (currentPage, sizePage) => {
   };
 };
 
-export const onClickFollowThunkCreator = (userId) => {
-  return async (dispatch) => {
+export const onClickFollowThunkCreator = (userId: number) => {
+  return async (dispatch: any) => {
     dispatch(toogleFollowingProgress(userId));
     try {
       const response = await UserAPI.postFollow(userId);
@@ -100,15 +145,15 @@ export const onClickFollowThunkCreator = (userId) => {
         dispatch(follow(userId));
       }
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     } finally {
       dispatch(toogleUnFollowingProgress(userId));
     }
   };
 };
 
-export const onClickUnFollowThunkCreator = (userId) => {
-  return async (dispatch) => {
+export const onClickUnFollowThunkCreator = (userId: number) => {
+  return async (dispatch: any) => {
     dispatch(toogleFollowingProgress(userId));
     try {
       const response = await UserAPI.delFollow(userId);
@@ -116,7 +161,7 @@ export const onClickUnFollowThunkCreator = (userId) => {
         dispatch(unfollow(userId));
       }
     } catch (error) {
-      console.log('unfollow error', error);
+      console.log("unfollow error", error);
     } finally {
       dispatch(toogleUnFollowingProgress(userId));
     }

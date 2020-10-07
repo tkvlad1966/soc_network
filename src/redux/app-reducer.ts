@@ -19,25 +19,17 @@ type initializedSuccessActionType = {
 
 type toogleIsFetchingActionType = {
   type: typeof TOOGLE_IS_FETCHING;
-  isFetching: toogleIsFetchingDataActionType;
-};
-
-type toogleIsFetchingDataActionType = {
   isFetching: boolean;
 };
 
 type toogleFollowingProgressActionType = {
   type: typeof TOOGLE_IS_FOLLOWING_IN_PROGRESS;
-  userId: toogleFollowingDataActionType;
-};
-
-type toogleFollowingDataActionType = {
   userId: UserId;
 };
 
 type toogleUnFollowingProgressActionType = {
   type: typeof TOOGLE_IS_UNFOLLOWING_IN_PROGRESS;
-  userId: toogleFollowingDataActionType;
+  userId: UserId;
 };
 
 let InitialState: InitialStateType = {
@@ -47,21 +39,21 @@ let InitialState: InitialStateType = {
 };
 
 export const toogleIsFetching = (
-  isFetching: toogleIsFetchingDataActionType
+  isFetching: boolean
 ): toogleIsFetchingActionType => ({
   type: TOOGLE_IS_FETCHING,
   isFetching,
 });
 
 export const toogleFollowingProgress = (
-  userId: toogleFollowingDataActionType
+  userId: UserId
 ): toogleFollowingProgressActionType => ({
   type: TOOGLE_IS_FOLLOWING_IN_PROGRESS,
   userId,
 });
 
 export const toogleUnFollowingProgress = (
-  userId: toogleFollowingDataActionType
+  userId: UserId
 ): toogleUnFollowingProgressActionType => ({
   type: TOOGLE_IS_UNFOLLOWING_IN_PROGRESS,
   userId,

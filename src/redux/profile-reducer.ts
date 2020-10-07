@@ -1,5 +1,6 @@
 import { stopSubmit } from "redux-form";
 import { ProfileAPI } from "../Components/common/api";
+import { PhotosType, PostType, ProfileType } from "../type";
 import { toogleIsFetching } from "./app-reducer";
 
 const ADD_POST = "ADD-POST";
@@ -7,38 +8,22 @@ const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
-export const addPost = (post) => ({ type: ADD_POST, newPost: post });
-
-export const setStatus = (status) => {
-  return {
-    type: SET_STATUS,
-    status: status,
-  };
-};
-
-export const savePhotoSuccess = (photos) => {
-  return {
-    type: SAVE_PHOTO_SUCCESS,
-    photos: photos,
-  };
-};
-
-export const setUserProfile = (profile) => ({
-  type: SET_USER_PROFILE,
-  profile,
-});
-
 let initialState = {
   posts: [
     { id: 1, message: "ПРивіт", likeCount: 3 },
     { id: 2, message: "Як справи", likeCount: 2 },
     { id: 3, message: "Зустрінемося? kjjacjbbadj sdhjh acgkj", likeCount: 3 },
-  ],
-  profile: null,
-  status: "",
+  ] as Array<PostType>,
+  profile: null as ProfileType | null,
+  status: "" as string | null,
 };
 
-const profileReducer = (state = initialState, action) => {
+export type initialStateType = typeof initialState;
+
+const profileReducer = (
+  state = initialState,
+  action: any
+): initialStateType => {
   switch (action.type) {
     case ADD_POST: {
       let post = { id: 5, message: action.newPost, likeCount: 0 };
@@ -57,31 +42,82 @@ const profileReducer = (state = initialState, action) => {
       return { ...state, profile: action.profile };
     }
     case SAVE_PHOTO_SUCCESS: {
-      return { ...state, profile: { ...state.profile, photos: action.photos } };
+      return {
+        ...state,
+        profile: { ...state.profile, photos: action.photos } as ProfileType,
+      };
     }
     default:
       return state;
   }
 };
 
-export const getUserProfileThunkCreator = (userId) => {
-  return async (dispatch) => {
+type AddPostActionType = {
+  type: typeof ADD_POST;
+  newPost: { post: PostType };
+};
+
+export const addPost = (post: PostType): AddPostActionType => ({
+  type: ADD_POST,
+  newPost: { post },
+});
+
+type SetStatusActionType = {
+  type: typeof SET_STATUS;
+  status?: string;
+};
+
+export const setStatus = (status: string): SetStatusActionType => {
+  return {
+    type: SET_STATUS,
+    status: status,
+  };
+};
+
+type SavePhotoSuccessActionType = {
+  type: typeof SAVE_PHOTO_SUCCESS;
+  photos: PhotosType;
+};
+
+export const savePhotoSuccess = (
+  photos: PhotosType
+): SavePhotoSuccessActionType => {
+  return {
+    type: SAVE_PHOTO_SUCCESS,
+    photos: photos,
+  };
+};
+
+type SetUserProfileActionType = {
+  type: typeof SET_USER_PROFILE;
+  profile: ProfileType;
+};
+
+export const setUserProfile = (
+  profile: ProfileType
+): SetUserProfileActionType => ({
+  type: SET_USER_PROFILE,
+  profile,
+});
+
+export const getUserProfileThunkCreator = (userId: number) => {
+  return async (dispatch: any) => {
     dispatch(toogleIsFetching(true));
     const response = await ProfileAPI.getUserProfile(userId);
     dispatch(toogleIsFetching(false));
     dispatch(setUserProfile(response));
   };
 };
-export const getStatusThunkCreator = (userId) => {
-  return async (dispatch) => {
+export const getStatusThunkCreator = (userId: number) => {
+  return async (dispatch: any) => {
     dispatch(toogleIsFetching(true));
     const response = await ProfileAPI.getStatus(userId);
     dispatch(toogleIsFetching(false));
     dispatch(setStatus(response.data));
   };
 };
-export const updateStatusThunkCreator = (status) => {
-  return async (dispatch) => {
+export const updateStatusThunkCreator = (status: string) => {
+  return async (dispatch: any) => {
     dispatch(toogleIsFetching(true));
     const response = await ProfileAPI.updateStatus(status);
     if (response.data.resultCode === 0) {
@@ -91,7 +127,7 @@ export const updateStatusThunkCreator = (status) => {
   };
 };
 
-export const savePhotoThunkCreator = (file) => async (dispatch) => {
+export const savePhotoThunkCreator = (file: any) => async (dispatch: any) => {
   dispatch(toogleIsFetching(true));
   const response = await ProfileAPI.savePhoto(file);
   if (response.data.resultCode === 0) {
@@ -99,9 +135,9 @@ export const savePhotoThunkCreator = (file) => async (dispatch) => {
     dispatch(savePhotoSuccess(response.data.data.photos));
   }
 };
-export const saveProfileThunkCreator = (profile) => async (
-  dispatch,
-  getState
+export const saveProfileThunkCreator = (profile: ProfileType) => async (
+  dispatch: any,
+  getState: any
 ) => {
   const userId = getState().auth.userId;
   dispatch(toogleIsFetching(true));

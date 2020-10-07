@@ -5,7 +5,16 @@ const SET_USER_DATA = "SET_USER_DATA";
 const SET_USER_PFOTOS = "SET_USER_PFOTOS";
 const GET_CAPTCHA_URL_SUCCESS = "samurai-network/auth/GET_CAPTCHA_URL_SUCCESS";
 
-let initialState = {
+export type initialStateType = {
+  userId: number | null;
+  login: string | null;
+  email: string | null;
+  photos: string | null;
+  isAuth: boolean;
+  captchaUrl: string | null;
+};
+
+let initialState: initialStateType = {
   userId: null,
   login: null,
   email: null,
@@ -14,7 +23,7 @@ let initialState = {
   captchaUrl: null,
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): initialStateType => {
   switch (action.type) {
     case SET_USER_DATA:
     case GET_CAPTCHA_URL_SUCCESS:
@@ -34,31 +43,70 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export const setAuthUserData = (userId, login, email, isAuth) => ({
+type SetAuthUserDataActionPayloadType = {
+  userId: number | null;
+  login: string | null;
+  email: string | null;
+  isAuth: boolean;
+};
+
+type SetAuthUserDataActionType = {
+  type: typeof SET_USER_DATA;
+  payload: SetAuthUserDataActionPayloadType;
+};
+
+export const setAuthUserData = (
+  userId: number | null,
+  login: string | null,
+  email: string | null,
+  isAuth: boolean
+): SetAuthUserDataActionType => ({
   type: SET_USER_DATA,
   payload: { userId, login, email, isAuth },
 });
-export const getCaptchaUrlSuccess = (captchaUrl) => ({
+
+type GetCaptchaUrlSuccessActionType = {
+  type: typeof GET_CAPTCHA_URL_SUCCESS;
+  payload: { captchaUrl: string };
+};
+
+export const getCaptchaUrlSuccess = (
+  captchaUrl: string
+): GetCaptchaUrlSuccessActionType => ({
   type: GET_CAPTCHA_URL_SUCCESS,
   payload: { captchaUrl },
 });
-export const setUserPhotos = (photos) => ({ type: SET_USER_PFOTOS, photos });
+
+type SetUserPhotosActionType = {
+  type: typeof SET_USER_PFOTOS;
+  photos: string;
+};
+
+export const setUserPhotos = (photos: string): SetUserPhotosActionType => ({
+  type: SET_USER_PFOTOS,
+  photos,
+});
 
 export const getAuthUserData = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     const response = await AuthAPI.getAuthorization();
     if (response.data.resultCode === 0) {
       let { id, login, email } = response.data.data;
       dispatch(setAuthUserData(id, login, email, true));
-      ProfileAPI.getUserProfile(id).then((data) => {
+      ProfileAPI.getUserProfile(id).then((data: any) => {
         dispatch(setUserPhotos(data.photos.small));
       });
     }
   };
 };
 
-export const login = (email, password, remembreMe, captcha) => {
-  return async (dispatch) => {
+export const login = (
+  email: string,
+  password: string,
+  remembreMe: boolean,
+  captcha: string
+) => {
+  return async (dispatch: any) => {
     const response = await AuthAPI.login(email, password, remembreMe, captcha);
     if (response.data.resultCode === 0) {
       dispatch(getAuthUserData());
@@ -75,14 +123,14 @@ export const login = (email, password, remembreMe, captcha) => {
   };
 };
 
-export const getCaptchaUrl = () => async (dispatch) => {
+export const getCaptchaUrl = () => async (dispatch: any) => {
   const response = await securityAPI.getCaptchaUrl();
   const captchaUrl = response.data.url;
   dispatch(getCaptchaUrlSuccess(captchaUrl));
 };
 
 export const logout = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     const response = await AuthAPI.logout();
     if (response.data.resultCode === 0) {
       dispatch(setAuthUserData(null, null, null, false));
