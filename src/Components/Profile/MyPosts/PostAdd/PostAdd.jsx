@@ -1,8 +1,8 @@
-import React from 'react';
-import s from './PostAdd.module.css';
-import { Field, reduxForm } from 'redux-form';
-import { requiredField, maxLength } from '../../../../utils/validator';
-import { Textarea } from '../../../common/FormsControls';
+import React from "react";
+import s from "./PostAdd.module.css";
+import { Field, reduxForm } from "redux-form";
+import { requiredField, maxLength } from "../../../../utils/validator";
+import { Textarea } from "../../../common/FormsControls";
 
 const maxLength40 = maxLength(40);
 
@@ -31,6 +31,6 @@ const PostAddForm = (props) => {
   );
 };
 
-const PostAddReduxForm = reduxForm({ form: 'post' })(PostAddForm);
+const PostAddReduxForm = reduxForm({ form: "post" })(PostAddForm);
 
 export default PostAdd;

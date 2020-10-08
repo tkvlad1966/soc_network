@@ -54,12 +54,12 @@ const profileReducer = (
 
 type AddPostActionType = {
   type: typeof ADD_POST;
-  newPost: { post: PostType };
+  newPost: string;
 };
 
-export const addPost = (post: PostType): AddPostActionType => ({
+export const addPost = (newPost: string): AddPostActionType => ({
   type: ADD_POST,
-  newPost: { post },
+  newPost,
 });
 
 type SetStatusActionType = {
