@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
-import s from './Paginator.module.css';
+import React, { FC, useState } from "react";
+import s from "./Paginator.module.css";
 
-const Paginator = (props) => {
-  let countPage = Math.ceil(props.totalCountUsers / props.sizePage);
-  let pages = [];
+type PropsType = {
+  currentPage: number;
+  onPageChange: (pageNumber: number) => void;
+  totalCountUsers: number;
+  sizePage: number;
+};
+
+const Paginator: FC<PropsType> = ({
+  currentPage,
+  onPageChange,
+  totalCountUsers,
+  sizePage,
+}) => {
+  let countPage = Math.ceil(totalCountUsers / sizePage);
+  let pages: Array<number> = [];
   let [numberPortion, setNumberPortion] = useState(0);
   const onClickNext = () => {
     setNumberPortion(numberPortion + 1);
@@ -13,6 +25,7 @@ const Paginator = (props) => {
   };
 
   pages = Array.from({ length: 10 }, (_, i) => numberPortion * 10 + i + 1);
+
   // for (
   //   let i = numberPortion * 10 - 9;
   //   i < numberPortion * 10 + 1 && i <= countPage;
@@ -26,11 +39,12 @@ const Paginator = (props) => {
       {numberPortion > 0 && <button onClick={onClickPrev}>prev</button>}
       {pages.map((num) => (
         <span
-          className={num === props.currentPage ? s.selected : s.unselected}
+          className={num === currentPage ? s.selected : s.unselected}
           onClick={() => {
-            props.onPageChange(num);
+            onPageChange(num);
           }}
-          key={num}>
+          key={num}
+        >
           {num}
         </span>
       ))}
