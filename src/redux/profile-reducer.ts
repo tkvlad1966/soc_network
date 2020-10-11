@@ -84,7 +84,7 @@ export const savePhotoSuccess = (
 ): SavePhotoSuccessActionType => {
   return {
     type: SAVE_PHOTO_SUCCESS,
-    photos: photos,
+    photos,
   };
 };
 

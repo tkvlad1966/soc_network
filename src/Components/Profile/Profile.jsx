@@ -8,7 +8,10 @@ const Profile = (props) => {
     <div>
       <div className={s.zastava}>
         <div>
-          <img src="https://cdn.pixabay.com/photo/2017/01/30/16/11/sunset-2021266__480.jpg" />
+          <img
+            alt="zastavka"
+            src="https://cdn.pixabay.com/photo/2017/01/30/16/11/sunset-2021266__480.jpg"
+          />
         </div>
       </div>
       <div className={s.ava}>

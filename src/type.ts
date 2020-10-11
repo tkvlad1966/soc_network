@@ -16,7 +16,7 @@ export type ContactsType = {
 };
 
 export type PhotosType = {
-  small?: string;
+  small: string | null;
   large?: string;
 };
 
