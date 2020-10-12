@@ -1,25 +1,46 @@
-import React from "react";
+import React, { FC } from "react";
 import s from "./UsersC.module.css";
-import { withRouter, NavLink } from "react-router-dom";
+import { withRouter, NavLink, RouteComponentProps } from "react-router-dom";
 import { Images } from "../../images";
 import Paginator from "../common/paginator/paginator";
+import { UserType } from "../../type";
 
-const Users = React.memo((props) => {
+type PropsType = {
+  currentPage: number;
+  onPageChange: (pageNumber: number) => void;
+  totalCountUsers: number;
+  sizePage: number;
+  users: Array<UserType>;
+  folloWingInProgress: Array<number>;
+  onClickUnFollow: (userID: number) => void;
+  onClickFollow: (userID: number) => void;
+};
+
+// interface Props {      // custom properties passed to component
+//   className: string;
+// }
+
+const Users: FC<PropsType & RouteComponentProps<{}>> = React.memo((props) => {
+  const {
+    currentPage,
+    onPageChange,
+    totalCountUsers,
+    sizePage,
+    users,
+    folloWingInProgress,
+    onClickUnFollow,
+    onClickFollow,
+  } = props;
+
   return (
     <div>
-      {props.users.map((user) => {
+      {users.map((user) => {
         return (
           <div className={s.users} key={user.id}>
             <div className={s.userFollowed}>
               <div>
                 <NavLink to={"/profile/" + user.id}>
-                  <img
-                    src={
-                      user.photos.small != null
-                        ? user.photos.small
-                        : Images.logo
-                    }
-                  />
+                  <img alt="photka" src={user?.photos?.small! ?? Images.logo} />
                 </NavLink>
               </div>
               <div>
@@ -29,18 +50,16 @@ const Users = React.memo((props) => {
                       (f) => f === user.id
                     )}
                     onClick={() => {
-                      props.onClickUnFollow(user.id);
+                      onClickUnFollow(user.id!);
                     }}
                   >
                     UnFollow{" "}
                   </button>
                 ) : (
                   <button
-                    disabled={props.folloWingInProgress.some(
-                      (id) => id === user.id
-                    )}
+                    disabled={folloWingInProgress.some((id) => id === user.id)}
                     onClick={() => {
-                      props.onClickFollow(user.id);
+                      onClickFollow(user.id!);
                     }}
                   >
                     Follow{" "}
@@ -59,13 +78,13 @@ const Users = React.memo((props) => {
       })}
 
       <Paginator
-        currentPage={props.currentPage}
-        onPageChange={props.onPageChange}
-        totalCountUsers={props.totalCountUsers}
-        sizePage={props.sizePage}
+        currentPage={currentPage}
+        onPageChange={onPageChange}
+        totalCountUsers={totalCountUsers}
+        sizePage={sizePage}
       />
     </div>
   );
 });
 
-export default withRouter(Users);
+export default withRouter(Users)  // withRouter має бути

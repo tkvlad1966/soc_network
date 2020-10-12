@@ -8,7 +8,7 @@ import authReducer from './auth-reducer';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
-let reducers = combineReducers({
+let rootReduser = combineReducers({
   profile: profileReducer,
   dialogs: dialogsReducer,
   navbar: navbarReducer,
@@ -18,9 +18,13 @@ let reducers = combineReducers({
   form: formReducer,
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
-// console.log('store', store.getState());
+type RootReduserType = typeof rootReduser
+export type AppStateType = ReturnType<RootReduserType>
 
+
+let store = createStore(rootReduser, applyMiddleware(thunkMiddleware));
+// console.log('store', store.getState());
+// @ts-ignore
 window.store = store;
 
 export default store;

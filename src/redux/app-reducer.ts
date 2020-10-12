@@ -5,11 +5,11 @@ const TOOGLE_IS_FOLLOWING_IN_PROGRESS = "TOOGLE_IS_FOLLOWING_IN_PROGRESS";
 const TOOGLE_IS_UNFOLLOWING_IN_PROGRESS = "TOOGLE_IS_UNFOLLOWING_IN_PROGRESS";
 const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS";
 
-type UserId = number | null;
+// export type UserId = number | null;
 
 export type InitialStateType = {
   isFetching?: boolean;
-  folloWingInProgress: Array<UserId>;
+  folloWingInProgress: Array<number>;
   initialized?: boolean;
 };
 
@@ -24,12 +24,12 @@ type toogleIsFetchingActionType = {
 
 type toogleFollowingProgressActionType = {
   type: typeof TOOGLE_IS_FOLLOWING_IN_PROGRESS;
-  userId: UserId;
+  userId: number;
 };
 
 type toogleUnFollowingProgressActionType = {
   type: typeof TOOGLE_IS_UNFOLLOWING_IN_PROGRESS;
-  userId: UserId;
+  userId: number;
 };
 
 let InitialState: InitialStateType = {
@@ -46,14 +46,14 @@ export const toogleIsFetching = (
 });
 
 export const toogleFollowingProgress = (
-  userId: UserId
+  userId: number
 ): toogleFollowingProgressActionType => ({
   type: TOOGLE_IS_FOLLOWING_IN_PROGRESS,
   userId,
 });
 
 export const toogleUnFollowingProgress = (
-  userId: UserId
+  userId: number
 ): toogleUnFollowingProgressActionType => ({
   type: TOOGLE_IS_UNFOLLOWING_IN_PROGRESS,
   userId,

@@ -28,7 +28,6 @@ const usersReducer = (state = initialState, action: any): InitialStateType => {
         ...state,
         users: state.users.map((u) => {
           if (u.id === action.userid) {
-            debugger;
             return { ...u, followed: true };
           }
           return u;
@@ -40,7 +39,6 @@ const usersReducer = (state = initialState, action: any): InitialStateType => {
         ...state,
         users: state.users.map((u) => {
           if (u.id === action.userid) {
-            debugger;
             return { ...u, followed: false };
           }
           return u;
@@ -160,7 +158,6 @@ export const onClickUnFollowThunkCreator = (userId: number) => {
     try {
       const response = await UserAPI.delFollow(userId);
       if (response.data.resultCode === 0) {
-        debugger;
         dispatch(unfollow(userId));
       }
     } catch (error) {
