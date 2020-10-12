@@ -31,7 +31,7 @@ class App extends Component {
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
           <Route path="/music" component={Music} />
           <Route path="/news" component={News} />
-          <Route path="/users" render={() => <UsersContainer />} />
+          <Route path="/users" render={() => <UsersContainer pageTitle={'Сторінка користувачів'}/>} />
           <Route path="/settings" component={Setting} />
         </div>
       </div>
